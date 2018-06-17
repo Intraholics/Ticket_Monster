@@ -57,7 +57,15 @@ public class UserResource {
     @Path("/{Username}&{Pass}")
     public Response logged_user(@PathParam("Username") String username,@PathParam("Pass") String pass ){
      User found=user.checkLoginCredentials(username, pass);
-     return Response.ok(found).build();
+     if (found!=null) {
+        String response="{\"userID\":"+String.valueOf(found.getUserID())+
+                ",\"username\":"+String.valueOf(found.getUsername())+
+                ",\"userRole\":"+String.valueOf(found.getUserRole())+"}";
+        return Response.ok(response).build();
+     }
+     else{
+         return Response.ok(null).build();
+     }
     }
     
         

@@ -22,8 +22,9 @@ import javax.ws.rs.core.Response;
 import intraholics.ticketmonster.Manager.OrdersDaoLocal;
 
 /**
- *
- * @author Kostis
+ * @author Kostis Hatzistamatis
+ * Class for mapping the Rest endpoints For the Order resources.
+ * 
  */
 
 @Path("/orders")

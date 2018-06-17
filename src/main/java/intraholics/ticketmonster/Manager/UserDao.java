@@ -14,31 +14,36 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 /**
- *
- * @author Kostis
+ * @author Kostis Hatzistamatis
+ * Dao Class For Implementing All the functionalities regarding with the user Entity
  */
+
 @Stateless
 public class UserDao implements UserDaoLocal{
     
     @PersistenceContext
     private EntityManager em;
 
+    /*Adds a User Object to the Database*/
     @Override
     public boolean addUser(User user1) {
         em.persist(user1);
         return true;
     }
 
+    /*Finds a User by it's Unique ID number*/
     @Override
     public User findUserById(Integer ID) {
        return  em.find(User.class, ID);
     }
 
+    /*Finds all User Objects from the Database*/
     @Override
     public List<User> findAllUsers() {
        return em.createNamedQuery("User.findAll").getResultList();
     }
 
+    /*Deletes a User from the Database*/
     @Override
     public boolean deleteUserById(Integer Id) {
         User user = em.find(User.class, Id);
@@ -46,12 +51,14 @@ public class UserDao implements UserDaoLocal{
         return true;
     }
 
+    /*Updates a User to the Database*/
     @Override
     public boolean updateUser(User user) {
         em.merge(user);
         return true;
     }
 
+    /*Finds a User by it's Username and Password*/
     @Override
     public User checkLoginCredentials(String username, String password) {
       Query query = em.createQuery("SELECT u FROM User u WHERE u.username=:usernam AND u.password=:pass",User.class);
@@ -60,13 +67,5 @@ public class UserDao implements UserDaoLocal{
       User found=(User)query.getSingleResult();
       return found;
     }
-    
-    @Override
-    public List<Cart> findCartByUser(Integer ID) {
-        Query query=em.createQuery("SELECT c FROM Cart c WHERE c.userID=:userid",Cart.class);
-        query.setParameter("userid",ID);
-        return (List<Cart>)query.getResultList();
-    }
-    
     
 }

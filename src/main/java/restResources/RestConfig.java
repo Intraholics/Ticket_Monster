@@ -12,7 +12,9 @@ import java.util.Set;
 
 /**
  *
- * @author Kostis
+ * @author Kostis Hatzistamatis
+ * 
+ * 
  */
 
 /*------------------------>ENDPOINTS<---------------------------

@@ -11,7 +11,7 @@ import javax.ejb.Local;
 
 /**
  *
- * @author Kostis
+ * @author Kostis Hatzistamatis
  */
 @Local
 public interface OrdersDaoLocal {

@@ -22,8 +22,9 @@ import javax.ws.rs.core.Response;
 import intraholics.ticketmonster.Manager.CartDaoLocal;
 
 /**
- *
- * @author Kostis
+ * @author Kostis Hatzistamatis
+ * Class for mapping the Rest endpoints For the cart resources.
+ * 
  */
 
 @Path("/cart")
@@ -52,7 +53,8 @@ public class CartResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/user/{id}")
     public Response findCartByUser(@PathParam("id") Integer id){
-        Cart found=cart.findCartByID(id);
+        Integer userid=id;
+        List<Cart> found=cart.findCartByUser(userid);
         return Response.ok(found).build();
     }
     

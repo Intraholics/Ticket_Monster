@@ -22,8 +22,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 /**
- *
- * @author Kostis
+ * @author Kostis Hatzistamatis
+ * Class for mapping the Rest endpoints For the Events resources.
+ * 
  */
 
 @Path("/events")

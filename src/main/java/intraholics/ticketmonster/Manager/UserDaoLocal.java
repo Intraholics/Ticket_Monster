@@ -12,7 +12,7 @@ import javax.ejb.Local;
 
 /**
  *
- * @author Kostis
+ * @author Kostis Hatzistamatis
  */
 @Local
 public interface UserDaoLocal {
@@ -23,8 +23,5 @@ public interface UserDaoLocal {
     public List<User> findAllUsers();
     public boolean deleteUserById(Integer Id);
     public boolean updateUser(User user);
-    public User checkLoginCredentials(String username,String password);
-    public List<Cart> findCartByUser(Integer ID);
-
-    
+    public User checkLoginCredentials(String username,String password);  
 }

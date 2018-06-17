@@ -5,7 +5,6 @@
  */
 package restResources;
 
-import intraholics.ticketmonster.Entities.Cart;
 import intraholics.ticketmonster.Entities.User;
 import intraholics.ticketmonster.Manager.UserDaoLocal;
 import java.util.List;
@@ -26,7 +25,9 @@ import javax.inject.Inject;
 
 /**
  *
- * @author Kostis
+ * @author Kostis Hatzistamatis
+ * Class for mapping the Rest endpoints For the user resources.
+ * 
  */
 @Path("/users")
 @Stateless

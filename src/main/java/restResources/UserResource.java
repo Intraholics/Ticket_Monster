@@ -22,6 +22,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import intraholics.ticketmonster.Manager.CartDaoLocal;
+import javax.inject.Inject;
 
 /**
  *
@@ -34,8 +35,7 @@ public class UserResource {
     
     @EJB
     private UserDaoLocal user;
-    private CartDaoLocal cart;
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAllUsers(){
@@ -59,15 +59,7 @@ public class UserResource {
      return Response.ok(found).build();
     }
     
-    
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("/{id}/orders")
-    public Response findOrderByUser(@PathParam("id") Integer id){
-        List<Cart> found=cart.findCartByUser(id);
-        return Response.ok(found).build();
-    }
-    
+        
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)

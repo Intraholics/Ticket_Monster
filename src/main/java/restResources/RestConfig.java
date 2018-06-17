@@ -18,10 +18,9 @@ import java.util.Set;
 /*------------------------>ENDPOINTS<---------------------------
 
 -------------------------->USERS<----------------------------
-http://localhost:8080/TicketMonster/api/users                  ->@GET->  Fetch all Users.
+http://localhost:8080/TicketMonster/api/users                        ->@GET->  Fetch all Users.
 http://localhost:8080/TicketMonster/api/users/{id}                   ->@GET->  Fetch User with Database id={id}.
 http://localhost:8080/TicketMonster/api/users/{username}&{password}  ->@GET->  Fetch User with Username={username} AND Password={password}.
-http://localhost:8080/TicketMonster/api/users/{id}/orders            ->@GET->  Fetch All Orders with UserId={id}.
 http://localhost:8080/TicketMonster/api/users                        ->@POST-> Add New User
 http://localhost:8080/TicketMonster/api/users                        ->@PUT->  Update User
 http://localhost:8080/TicketMonster/api/users{id}                    ->@DELETE-> Delete User with id={id}
@@ -46,6 +45,7 @@ http://localhost:8080/TicketMonster/api/events/{id}                 ->@DELETE-> 
 ------------------------->ORDERS<--------------------------
 http://localhost:8080/TicketMonster/api/cart                      ->@GET->  Fetch all Carts.
 http://localhost:8080/TicketMonster/api/cart/{id}                 ->@GET->  Fetch Cart with id={id}.
+http://localhost:8080/TicketMonster/api/cart/user/{id}            ->@GET->  Fetch All Carts with UserId={id}.
 http://localhost:8080/TicketMonster/api/cart/                     ->@POST-> Add new Cart.
 http://localhost:8080/TicketMonster/api/cart/                     ->@PUT->  Update Cart.
 http://localhost:8080/TicketMonster/api/cart/{id}                 ->@DELETE-> Delete Cart with id={id}.

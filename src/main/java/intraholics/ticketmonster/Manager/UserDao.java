@@ -5,6 +5,7 @@
  */
 package intraholics.ticketmonster.Manager;
 
+import intraholics.ticketmonster.Entities.Cart;
 import intraholics.ticketmonster.Entities.User;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -60,6 +61,12 @@ public class UserDao implements UserDaoLocal{
       return found;
     }
     
+    @Override
+    public List<Cart> findCartByUser(Integer ID) {
+        Query query=em.createQuery("SELECT c FROM Cart c WHERE c.userID=:userid",Cart.class);
+        query.setParameter("userid",ID);
+        return (List<Cart>)query.getResultList();
+    }
     
     
 }

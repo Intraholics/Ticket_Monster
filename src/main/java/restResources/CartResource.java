@@ -48,6 +48,13 @@ public class CartResource {
         return Response.ok(found).build();
     }
     
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/user/{id}")
+    public Response findCartByUser(@PathParam("id") Integer id){
+        Cart found=cart.findCartByID(id);
+        return Response.ok(found).build();
+    }
     
     @POST
     @Consumes(MediaType.APPLICATION_JSON)

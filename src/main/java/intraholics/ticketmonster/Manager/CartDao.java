@@ -31,7 +31,7 @@ public class CartDao implements CartDaoLocal{
     public List<Cart> findCartByUser(Integer ID) {
         Query query=em.createQuery("SELECT c FROM Cart c WHERE c.userID=:userid",Cart.class);
         query.setParameter("userid",ID);
-        return query.getResultList();
+        return (List<Cart>)query.getResultList();
     }
 
     @Override

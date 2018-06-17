@@ -5,6 +5,8 @@
  */
 package intraholics.ticketmonster.Manager;
 
+import intraholics.ticketmonster.Entities.Cart;
+import intraholics.ticketmonster.Entities.Events;
 import intraholics.ticketmonster.Entities.Orders;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -39,8 +41,18 @@ public class OrdersDao implements OrdersDaoLocal{
     /*Adds an Order Object to the Database*/
     @Override
     public boolean addOrder(Orders order) {
-        em.persist(order);
-        return true;
+        Cart found=em.find(Cart.class, order.getCartID().getCartID());
+        Events eventfound=em.find(Events.class,found.getEventID().getEventID());
+        if ((eventfound.getTicketsLeft()-found.getQuantity())>= 0 ){
+            eventfound.setTicketsLeft(eventfound.getTicketsLeft()-found.getQuantity());
+            em.merge(found);
+            em.persist(order);
+            return true;  
+        }
+        else {
+            return false;
+        }
+  
     }
 
     /*Updates an Order Object to the Database*/

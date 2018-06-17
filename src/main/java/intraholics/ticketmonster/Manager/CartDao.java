@@ -36,8 +36,9 @@ public class CartDao implements CartDaoLocal{
     /*Finds all Cart Objects stored on Database for a specific user by the Users Unique ID*/
     @Override
     public List<Cart> findCartByUser(Integer ID) {
+        User found=em.find(User.class, ID);
         Query query=em.createQuery("SELECT c FROM Cart c WHERE c.userID=:userid",Cart.class);
-        query.setParameter("userid",ID);
+        query.setParameter("userid",found);
         return query.getResultList();
     }
 
@@ -47,19 +48,11 @@ public class CartDao implements CartDaoLocal{
         return em.createNamedQuery("Cart.findAll").getResultList();
     }
 
-    /*Adds n new Cart Object and stores it on the Database after checking that there are tickets left to add*/
+    /*Adds a new Cart Object and stores it on the Database*/
     @Override
     public boolean addCart(Cart cart) {
-        Events toupdate=em.find(Events.class,cart.getEventID().getEventID());
-        if ((toupdate.getTicketsLeft()-cart.getQuantity()) >= 0){
-            toupdate.setTicketsLeft(toupdate.getTicketsLeft()-cart.getQuantity());
-            em.merge(toupdate);
             em.persist(cart);
             return true;
-        }
-        else {
-            return false;
-        }
     }
 
     

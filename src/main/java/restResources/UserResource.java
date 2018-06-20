@@ -20,10 +20,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import intraholics.ticketmonster.Manager.CartDaoLocal;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonObject;
 
@@ -88,6 +84,16 @@ public class UserResource {
     public Response updateUser(User user1){
         user.updateUser(user1);
         return Response.ok(user1).build();
+    }
+    
+    @PUT
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateUser(@PathParam("id")Integer id){
+        String newpass="RANDOM NUMBER";
+        user.updateUser(id,newpass);
+        return Response.ok().build();
     }
 
     @DELETE

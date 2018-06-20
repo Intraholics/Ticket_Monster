@@ -44,14 +44,14 @@ http://localhost:8080/TicketMonster/api/events/                     ->@PUT->  Up
 http://localhost:8080/TicketMonster/api/events/{id}                 ->@DELETE-> Delete Event with id={id}.
 ------------------------->EVENTS<--------------------------
 
-------------------------->ORDERS<--------------------------
+------------------------->CART<--------------------------
 http://localhost:8080/TicketMonster/api/cart                      ->@GET->  Fetch all Carts.
 http://localhost:8080/TicketMonster/api/cart/{id}                 ->@GET->  Fetch Cart with id={id}.
 http://localhost:8080/TicketMonster/api/cart/user/{id}            ->@GET->  Fetch All Carts with UserId={id}.
 http://localhost:8080/TicketMonster/api/cart/                     ->@POST-> Add new Cart.
 http://localhost:8080/TicketMonster/api/cart/                     ->@PUT->  Update Cart.
 http://localhost:8080/TicketMonster/api/cart/{id}                 ->@DELETE-> Delete Cart with id={id}.
-------------------------->ORDERS<--------------------------
+------------------------->CART<--------------------------
 
 */
 

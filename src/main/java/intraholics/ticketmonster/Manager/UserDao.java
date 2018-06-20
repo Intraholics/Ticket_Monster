@@ -5,7 +5,6 @@
  */
 package intraholics.ticketmonster.Manager;
 
-import intraholics.ticketmonster.Entities.Cart;
 import intraholics.ticketmonster.Entities.User;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -67,5 +66,12 @@ public class UserDao implements UserDaoLocal{
       User found=(User)query.getSingleResult();
       return found;
     }
-    
+
+    @Override
+    public boolean updateUser(Integer UserID,String Newpass) {
+        User toupdate=em.find(User.class, UserID);
+        toupdate.setPassword(Newpass);
+        em.merge(toupdate);
+        return true;
+    }    
 }

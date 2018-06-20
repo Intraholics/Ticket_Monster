@@ -5,7 +5,6 @@
  */
 package intraholics.ticketmonster.Manager;
 
-import intraholics.ticketmonster.Entities.Cart;
 import intraholics.ticketmonster.Entities.User;
 import java.util.List;
 import javax.ejb.Local;
@@ -23,5 +22,6 @@ public interface UserDaoLocal {
     public List<User> findAllUsers();
     public boolean deleteUserById(Integer Id);
     public boolean updateUser(User user);
+    public boolean updateUser(Integer UserID,String newPass);
     public User checkLoginCredentials(String username,String password);  
 }

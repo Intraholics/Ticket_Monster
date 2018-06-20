@@ -69,7 +69,7 @@ public class OrdersResource {
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces (MediaType.APPLICATION_JSON)
-    @Path("{/id}")
+    @Path("/{id}")
     public Response deleteOrderById (@PathParam("id")Integer id){
         order.deleteOrderById(id);
         return Response.ok().build();

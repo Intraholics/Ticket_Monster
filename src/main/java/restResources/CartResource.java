@@ -5,6 +5,7 @@
  */
 package restResources;
 
+import com.google.gson.Gson;
 import intraholics.ticketmonster.Entities.Cart;
 import java.util.List;
 import javax.ejb.EJB;
@@ -20,6 +21,17 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import intraholics.ticketmonster.Manager.CartDaoLocal;
+import java.math.BigDecimal;
+
+import java.util.ArrayList;
+import java.util.Map;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonBuilderFactory;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
+import javax.ws.rs.core.GenericEntity;
 
 /**
  * @author Kostis Hatzistamatis
@@ -49,13 +61,24 @@ public class CartResource {
         return Response.ok(found).build();
     }
     
+    //Get all Carts by userID
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
     @Path("/user/{id}")
-    public Response findCartByUser(@PathParam("id") Integer id){
-        Integer userid=id;
+    public Response findCartByUser(@PathParam("id") Integer userid){
         List<Cart> found=cart.findCartByUser(userid);
-        return Response.ok(found).build();
+        List<JsonObject> Cartstosend=new ArrayList();
+        for (int i=0; i<found.size(); i++){
+                    JsonObject tosend=Json.createObjectBuilder()
+                    .add("cartID",found.get(i).getCartID())
+                    .add("eventID",found.get(i).getEventID().getDescription())
+                    .add("userid",found.get(i).getUserID().getUsername())
+                    .add("quantity",found.get(i).getQuantity())
+                    .add("finalPrice",found.get(i).getFinalPrice()).build();
+                    Cartstosend.add(i, tosend);
+        }
+       // GenericEntity<List<JsonObject>> JsonEntity =new GenericEntity<List<JsonObject>>(Cartstosend){};
+        return Response.ok(Cartstosend).build();
     }
     
     @POST

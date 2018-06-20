@@ -21,7 +21,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import intraholics.ticketmonster.Manager.CartDaoLocal;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import javax.inject.Inject;
+import javax.json.Json;
+import javax.json.JsonObject;
 
 /**
  *
@@ -58,10 +62,11 @@ public class UserResource {
     public Response logged_user(@PathParam("Username") String username,@PathParam("Pass") String pass ){
      User found=user.checkLoginCredentials(username, pass);
      if (found!=null) {
-        String response="{\"userID\":"+String.valueOf(found.getUserID())+
-                ",\"username\":"+String.valueOf(found.getUsername())+
-                ",\"userRole\":"+String.valueOf(found.getUserRole())+"}";
-        return Response.ok(response).build();
+         JsonObject usertolog=Json.createObjectBuilder()
+                 .add("userID",found.getUserID())
+                 .add("username",found.getUsername())
+                 .add("userRole", found.getUserRole()).build();
+        return Response.ok(usertolog).build();
      }
      else{
          return Response.ok(null).build();

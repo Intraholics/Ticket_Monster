@@ -25,7 +25,8 @@ http://localhost:8080/TicketMonster/api/users/{id}                   ->@GET->  F
 http://localhost:8080/TicketMonster/api/users/{username}&{password}  ->@GET->  Fetch User with Username={username} AND Password={password}.
 http://localhost:8080/TicketMonster/api/users                        ->@POST-> Add New User
 http://localhost:8080/TicketMonster/api/users                        ->@PUT->  Update User
-http://localhost:8080/TicketMonster/api/users{id}                    ->@DELETE-> Delete User with id={id}
+http://localhost:8080/TicketMonster/api/users/{id}                    ->@PUT->  Update User by setting it's password to random String
+http://localhost:8080/TicketMonster/api/users/{id}                    ->@DELETE-> Delete User with id={id}
 ------------------------->USERS<-----------------------------
 
 ------------------------->ORDERS<--------------------------

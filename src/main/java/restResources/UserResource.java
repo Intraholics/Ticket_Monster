@@ -7,9 +7,14 @@ package restResources;
 
 import intraholics.ticketmonster.Entities.User;
 import intraholics.ticketmonster.Manager.UserDaoLocal;
+import intraholics.ticketmonster.validation.ValidationBean;
+import intraholics.ticketmonster.validation.ValidationBeanLocal;
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Random;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -36,7 +41,9 @@ public class UserResource {
     
     @EJB
     private UserDaoLocal user;
-
+    @Inject
+    private ValidationBeanLocal valid;
+    
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAllUsers(){
@@ -57,16 +64,8 @@ public class UserResource {
     @Path("/{Username}&{Pass}")
     public Response logged_user(@PathParam("Username") String username,@PathParam("Pass") String pass ){
      User found=user.checkLoginCredentials(username, pass);
-     if (found!=null) {
-         JsonObject usertolog=Json.createObjectBuilder()
-                 .add("userID",found.getUserID())
-                 .add("username",found.getUsername())
-                 .add("userRole", found.getUserRole()).build();
+     JsonObject usertolog=valid.addToValidated(found);
         return Response.ok(usertolog).build();
-     }
-     else{
-         return Response.ok(null).build();
-     }
     }
     
         
@@ -91,7 +90,7 @@ public class UserResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateUser(@PathParam("id")Integer id){
-        String newpass="RANDOM NUMBER";
+        String newpass=PasswordGenerator();
         user.updateUser(id,newpass);
         return Response.ok().build();
     }
@@ -106,4 +105,16 @@ public class UserResource {
     }
     
     
+     public String PasswordGenerator()
+    {
+    	String s = "";
+		Random random = new Random();
+        for (int i = 0; i < 12; i++)
+        {
+            int randomNumber = random.nextInt(126) + 33;
+            char c = (char)randomNumber;            
+            s = s + Character.toString(c);            
+        } 
+        return s;
+    }
 }

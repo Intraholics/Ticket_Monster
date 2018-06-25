@@ -72,7 +72,7 @@ public class Events implements Serializable {
     public Events() {
     }
 
-    public Events(Integer eventID) {
+    public Events(Integer eventID) { 
         this.eventID = eventID;
     }
 

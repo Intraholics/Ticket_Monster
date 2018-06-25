@@ -5,7 +5,6 @@
  */
 package restResources;
 
-import com.google.gson.Gson;
 import intraholics.ticketmonster.Entities.Cart;
 import java.util.List;
 import javax.ejb.EJB;
@@ -21,14 +20,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import intraholics.ticketmonster.Manager.CartDaoLocal;
-import java.math.BigDecimal;
 
 import java.util.ArrayList;
-import java.util.Map;
 import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonArrayBuilder;
-import javax.json.JsonBuilderFactory;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.ws.rs.core.GenericEntity;

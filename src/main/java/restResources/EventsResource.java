@@ -7,9 +7,12 @@ package restResources;
 
 import intraholics.ticketmonster.Entities.Events;
 import intraholics.ticketmonster.Manager.EventsDaoLocal;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.json.Json;
+import javax.json.JsonObject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -37,10 +40,20 @@ public class EventsResource {
     private EventsDaoLocal event;
     
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
     public Response findAllEvents(){
         List<Events> events=event.findAllEvents();
-        return Response.ok(events).build();
+        List<JsonObject> Jsonevents = new ArrayList();
+        for(int i=0; i<events.size(); i++){
+           JsonObject newJO = Json.createObjectBuilder().add("eventID", events.get(i).getEventID())
+                   .add("description",events.get(i).getDescription())
+                   .add("date",events.get(i).getDate().toString().substring(0,16))
+                   .add("ticketsLeft",events.get(i).getTicketsLeft())
+                   .add("price", events.get(i).getPrice())
+                   .build();          
+           Jsonevents.add(newJO);
+       }
+       return Response.ok(Jsonevents).build();
     }
     
     @GET
@@ -48,7 +61,13 @@ public class EventsResource {
     @Path("/{id}")
     public Response findEventById(@PathParam("id") Integer id){
         Events found=event.findEventbyId(id);
-        return Response.ok(found).build();
+                   JsonObject newJO = Json.createObjectBuilder().add("eventID",found.getEventID())
+                   .add("description",found.getDescription())
+                   .add("date",found.getDate().toString())
+                   .add("ticketsleft",found.getTicketsLeft())
+                   .add("price",found.getPrice())
+                   .build();
+        return Response.ok(newJO).build();
     }
     
     

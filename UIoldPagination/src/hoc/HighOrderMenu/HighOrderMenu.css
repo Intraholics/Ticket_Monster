@@ -1,0 +1,68 @@
+/* Header Styles */
+
+.header{
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 17px 100px 0;
+   color: whitesmoke;
+   z-index: 1;
+}
+
+.header nav{
+    display: flex;
+    margin-right: -15px;
+}
+
+.header nav li{
+    margin: 0 15px;
+}
+
+
+ .header nav{
+    list-style: none;
+}
+
+.header h2 a.active{
+    text-decoration: none;
+    opacity: 0.75;
+    font-family: 'Open Sans', sans-serif;
+    color: #bdc3c7;
+    font-weight: bold;
+    font-size: 0.8em;
+}
+
+.header h2 a{
+    text-decoration: none;
+    opacity: 0.85;
+    font-family: 'Open Sans', sans-serif;
+    color: #bdc3c7;
+    font-size: 1em;
+    font-weight: 300;   
+}
+
+.header li a{
+    text-decoration: none;
+    opacity: 0.75;
+    font-family: 'Open Sans', sans-serif;
+    color: #bdc3c7;
+    font-size: 1.2em;
+    font-weight: 300;   
+}
+.header li a.active{
+    text-decoration: none;
+    opacity: 1;
+    font-family: 'Open Sans', sans-serif;
+    color: #bdc3c7;
+    font-size: 1.2em;
+    font-weight: 800;   
+}
+
+
+.header a:hover{
+    opacity: 1;
+    text-decoration: none;
+    color: #bdc3c7;
+}

@@ -1,0 +1,155 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.LandingPage ul, .LandingPage nav{
+    list-style: none;
+}
+
+.LandingPage a, .LandingPage button{
+    text-decoration: none;
+    opacity: 0.75;
+    font-family: 'Open Sans', sans-serif;
+    color: #bdc3c7;
+}
+
+.LandingPage a:hover{
+    opacity: 1;
+}
+
+.LandingPage button:hover{
+    opacity: 1;
+}
+
+.LandingPage button.btn{
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-align: center;
+    background-color: #bdc3c7;
+    color: #2c3e50;
+}
+
+.LandingPage section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 100px 80px;
+}
+
+.photoGrid{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.LandingPage hr{
+    width: 250px;
+    height: 3px;
+    border: 0;
+    margin-bottom: 50px;
+    background-color: #024B52;
+}
+
+.LandingPage section h3.title{
+    text-transform: capitalize;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.LandingPage section p{
+    max-width: 775px;
+    line-height: 2;
+    padding: 0 20px;
+    margin-bottom: 30px;
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+}
+
+/* firstSection styles */
+
+.LandingPage .firstSection{
+    position: relative;
+    justify-content: center;
+    text-align: center;
+    min-height: 100vh;
+    color: whitesmoke;
+    background: #bdc3c7;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom, #2c3e50, #bdc3c7);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom, #2c3e50, #bdc3c7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+.LandingPage .firstSection h1{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 60px;
+    margin-bottom: 15px;
+    color: #2c3e50;
+}
+
+.LandingPage .firstSection h1 span{
+    font-weight: 700;
+}
+
+.LandingPage .firstSection h3{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 25px;
+    margin-bottom: 20px;
+    color: #bdc3c7;
+}
+
+.LandingPage .firstSection button.btn {
+    padding: 20px 46px;
+}
+
+/* secondSection styles */
+.LandingPage .secondSection{
+    background-color: #bdc3c7;
+}
+
+.LandingPage .secondSection .photoGrid li{
+    height: 350px;
+    padding: 20px;
+    background-clip: content-box;
+    background-size: cover;
+    background-position: center;
+}
+
+.LandingPage .secondSection .photoGrid li.small{
+    flex-basis: 40%;
+}
+
+.LandingPage .secondSection .photoGrid li.large{
+    flex-basis: 60%;
+}
+
+.pic1{
+    background-image: url(https://countryclones.com/wp-content/uploads/2017/11/2018-country-concerts.png);
+}
+.pic2{
+    background-image: url(https://www.kclimo.com/wp-content/uploads/2015/02/hot-KC-concert-crowd.jpg);
+}
+.pic3{
+    background-image: url(https://homehouse.co.uk/wp-content/uploads/2017/04/Beach-Party-June-17.jpg);
+}
+.pic4{
+    background-image: url(https://partyflock.nl/images/party/346121_620x413_460681/Downtown-Beach-Party.jpg);
+}
+
+
+
+
+@media only screen and (max-width: 700px) {
+    .secondSection .photoGrid li.small,
+    .secondSection .photoGrid li.large{
+    flex-basis: 100%;
+    }
+}

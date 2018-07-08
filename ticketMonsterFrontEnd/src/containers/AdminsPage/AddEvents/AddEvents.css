@@ -1,0 +1,11 @@
+@media all and (min-width: 480px) {
+    .AddEvents {
+      padding: 60px 0;
+    }
+  
+    .AddEvents form {
+      margin: 140px auto;
+      max-width: 320px;
+    }
+  }
+  

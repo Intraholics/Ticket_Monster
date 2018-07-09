@@ -24,15 +24,18 @@ http://localhost:8080/TicketMonster/api/users                        ->@GET->  F
 http://localhost:8080/TicketMonster/api/users/{id}                   ->@GET->  Fetch User with Database id={id}.
 http://localhost:8080/TicketMonster/api/users/{username}&{password}  ->@GET->  Fetch User with Username={username} AND Password={password}.
 http://localhost:8080/TicketMonster/api/users                        ->@POST-> Add New User
+http://localhost:8080/TicketMonster/api/users/{id}                   ->@POST-> User Logout
 http://localhost:8080/TicketMonster/api/users                        ->@PUT->  Update User
-http://localhost:8080/TicketMonster/api/users/{id}                    ->@PUT->  Update User by setting it's password to random String
-http://localhost:8080/TicketMonster/api/users/{id}                    ->@DELETE-> Delete User with id={id}
+http://localhost:8080/TicketMonster/api/users/{id}                   ->@PUT->  Update User by setting it's password to random String or making him admin
+http://localhost:8080/TicketMonster/api/users/{id}                   ->@DELETE-> Delete User with id={id}
 ------------------------->USERS<-----------------------------
 
 ------------------------->ORDERS<--------------------------
 http://localhost:8080/TicketMonster/api/orders                      ->@GET->  Fetch all Orders.
 http://localhost:8080/TicketMonster/api/orders/{id}                 ->@GET->  Fetch Order with id={id}.
+http://localhost:8080/TicketMonster/api/orders/users/{id}           ->@GET->  Fetch Orders with Userid={id}.
 http://localhost:8080/TicketMonster/api/orders/                     ->@POST-> Add new Order.
+http://localhost:8080/TicketMonster/api/orders/orders               ->@POST-> Add list of Orders.
 http://localhost:8080/TicketMonster/api/orders/                     ->@PUT->  Update Order.
 http://localhost:8080/TicketMonster/api/orders/{id}                 ->@DELETE-> Delete Order with id={id}.
 ------------------------->ORDERS<--------------------------
@@ -50,6 +53,7 @@ http://localhost:8080/TicketMonster/api/cart                      ->@GET->  Fetc
 http://localhost:8080/TicketMonster/api/cart/{id}                 ->@GET->  Fetch Cart with id={id}.
 http://localhost:8080/TicketMonster/api/cart/user/{id}            ->@GET->  Fetch All Carts with UserId={id}.
 http://localhost:8080/TicketMonster/api/cart/                     ->@POST-> Add new Cart.
+http://localhost:8080/TicketMonster/api/cart/carts                ->@POST-> Add List of Carts.
 http://localhost:8080/TicketMonster/api/cart/                     ->@PUT->  Update Cart.
 http://localhost:8080/TicketMonster/api/cart/{id}                 ->@DELETE-> Delete Cart with id={id}.
 ------------------------->CART<--------------------------

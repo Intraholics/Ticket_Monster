@@ -7,7 +7,10 @@ package intraholics.ticketmonster.Manager;
 
 import intraholics.ticketmonster.Entities.Events;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -41,11 +44,10 @@ public class EventsDao implements EventsDaoLocal{
     /*Adds a new Event object and stores it on the Database*/
     @Override
     public boolean addEvent(Events event) {
-        java.text.SimpleDateFormat SQL_Datetime = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String currentTime = SQL_Datetime.format(LocalDateTime.now());
-        String EventDatetime = SQL_Datetime.format( event.getDate());
+            Instant instant = LocalDateTime.now().toInstant(ZoneOffset.ofHours(3));
+            Date date = Date.from(instant);
         
-        if (currentTime.compareTo(EventDatetime)<0) {
+        if (date.compareTo(event.getDate())<0) {
             return false;
         }
         else {

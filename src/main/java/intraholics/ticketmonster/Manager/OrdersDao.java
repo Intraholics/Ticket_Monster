@@ -12,6 +12,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  * @author Kostis Hatzistamatis
@@ -64,10 +65,17 @@ public class OrdersDao implements OrdersDaoLocal{
 
     /*removes an Order Object from the Database*/
     @Override
-    public boolean deleteOrderById(Integer id) {
-        Orders todelete=em.find(Orders.class,id);
+    public boolean deleteOrderById(Integer orderID) {
+        Orders todelete=em.find(Orders.class,orderID);
         em.remove(todelete);
         return true;
+    }
+
+    @Override
+    public List<Orders> findOrdersByUserId(Integer Userid) {
+        Query query=em.createQuery("SELECT o FROM Orders o WHERE o.cartID.userID.userID=:userid",Orders.class);
+        query.setParameter("userid", Userid);
+        return query.getResultList();
     }
     
 }

@@ -21,4 +21,5 @@ public interface OrdersDaoLocal {
     public boolean addOrder(Orders order);
     public boolean updateOrder(Orders order);
     public boolean deleteOrderById(Integer OrderId);
+    public List<Orders> findOrdersByUserId(Integer Userid);
 }

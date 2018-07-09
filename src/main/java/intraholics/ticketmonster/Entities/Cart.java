@@ -1,4 +1,4 @@
-    /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -11,6 +11,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Kostis Hatzistamatis
+ * @author Kostis
  */
 @Entity
 @Table(name = "cart", catalog = "ticketmonster", schema = "")
@@ -35,7 +36,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Cart.findAll", query = "SELECT c FROM Cart c")
     , @NamedQuery(name = "Cart.findByCartID", query = "SELECT c FROM Cart c WHERE c.cartID = :cartID")
     , @NamedQuery(name = "Cart.findByQuantity", query = "SELECT c FROM Cart c WHERE c.quantity = :quantity")
-    , @NamedQuery(name = "Cart.findByFinalPrice", query = "SELECT c FROM Cart c WHERE c.finalPrice = :finalPrice")})
+    , @NamedQuery(name = "Cart.findByFinalPrice", query = "SELECT c FROM Cart c WHERE c.finalPrice = :finalPrice")
+    , @NamedQuery(name = "Cart.findByCheckout", query = "SELECT c FROM Cart c WHERE c.checkout = :checkout")})
 public class Cart implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -52,13 +54,17 @@ public class Cart implements Serializable {
     @NotNull
     @Column(name = "final_price", nullable = false)
     private int finalPrice;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cartID")
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "checkout", nullable = false)
+    private boolean checkout;
+    @OneToMany(orphanRemoval = true, mappedBy = "cartID", fetch = FetchType.EAGER)
     private Collection<Orders> ordersCollection;
     @JoinColumn(name = "eventID", referencedColumnName = "eventID", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Events eventID;
     @JoinColumn(name = "userID", referencedColumnName = "userID", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private User userID;
 
     public Cart() {
@@ -68,10 +74,11 @@ public class Cart implements Serializable {
         this.cartID = cartID;
     }
 
-    public Cart(Integer cartID, int quantity, int finalPrice) {
+    public Cart(Integer cartID, int quantity, int finalPrice, boolean checkout) {
         this.cartID = cartID;
         this.quantity = quantity;
         this.finalPrice = finalPrice;
+        this.checkout = checkout;
     }
 
     public Integer getCartID() {
@@ -96,6 +103,14 @@ public class Cart implements Serializable {
 
     public void setFinalPrice(int finalPrice) {
         this.finalPrice = finalPrice;
+    }
+
+    public boolean getCheckout() {
+        return checkout;
+    }
+
+    public void setCheckout(boolean checkout) {
+        this.checkout = checkout;
     }
 
     @XmlTransient

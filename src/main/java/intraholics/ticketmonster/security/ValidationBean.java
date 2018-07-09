@@ -3,14 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package intraholics.ticketmonster.validation;
+package intraholics.ticketmonster.security;
 
 import intraholics.ticketmonster.Entities.User;
 import java.util.List;
 import javax.ejb.Singleton;
-import javax.json.JsonObject;
 import java.util.ArrayList;
-import javax.json.Json;
 
 
 
@@ -25,25 +23,19 @@ public class ValidationBean implements ValidationBeanLocal{
     
     
     List<Integer> users_logged=new ArrayList();
-  //  JsonObject logged=null;
+
     
     @Override
-    public JsonObject addToValidated(User UserFound){    
+    public Integer addToValidated(User UserFound){    
         if (UserFound==null){
             return null;
         }
         else {
            Integer token=UserFound.getUsername().hashCode();
-            JsonObject logged=Json.createObjectBuilder()
-                    .add("UserID",UserFound.getUserID())
-                    .add("Username",UserFound.getUsername())
-                    .add("Role",UserFound.getUserRole())
-                    .add("Token",token)
-                    .build();
             if (!this.checkIfValidated(token)){
                 users_logged.add(token);
             }
-            return logged;
+            return token;
         }
     }
     @Override
@@ -61,5 +53,4 @@ public class ValidationBean implements ValidationBeanLocal{
             return false;
         }
     }
-    
 }

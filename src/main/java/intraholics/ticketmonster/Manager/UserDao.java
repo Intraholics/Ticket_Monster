@@ -63,8 +63,13 @@ public class UserDao implements UserDaoLocal{
       Query query = em.createQuery("SELECT u FROM User u WHERE u.username=:usernam AND u.password=:pass",User.class);
       query.setParameter("usernam", username);
       query.setParameter("pass", password);
-      User found=(User)query.getSingleResult();
-      return found;
+          List<User> found=(List<User>)query.getResultList();
+          if(!found.isEmpty()){
+              return found.get(0);
+          }
+          else {
+              return null;
+          }
     }
 
     @Override

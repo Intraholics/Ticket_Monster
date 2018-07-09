@@ -79,7 +79,7 @@ public class User implements Serializable {
     private boolean userRole;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userID")
     private Collection<Cart> cartCollection;
-
+ 
     public User() {
     }
 

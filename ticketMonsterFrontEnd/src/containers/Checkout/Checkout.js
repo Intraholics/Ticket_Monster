@@ -18,9 +18,9 @@ class Checkout extends Component{
     }
 
     componentDidMount(){
-        axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
+        axios.defaults.headers.common['Authorization'] = sessionStorage.getItem('token');
 
-        axios.get(`http://localhost:8080/TicketMonster/api/cart/user/${parseInt(localStorage.getItem('userID'),10)}`)//user id
+        axios.get(`http://localhost:8080/TicketMonster/api/cart/user/${parseInt(sessionStorage.getItem('userID'),10)}`)//user id
             .then(res => {
                 this.setState({checkoutEvents: res.data});
             })
@@ -28,7 +28,7 @@ class Checkout extends Component{
                 this.props.history.replace('/error');
             });
 
-         axios.get(`http://localhost:8080/TicketMonster/api/users/${parseInt(localStorage.getItem('userID'),10)}`)//user id
+         axios.get(`http://localhost:8080/TicketMonster/api/users/${parseInt(sessionStorage.getItem('userID'),10)}`)//user id
             .then(res2 => {
                 this.setState({
                     name: res2.data.name,

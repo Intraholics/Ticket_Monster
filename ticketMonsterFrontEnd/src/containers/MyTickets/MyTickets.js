@@ -10,9 +10,9 @@ class MyTickets extends Component{
     }
 
     componentDidMount(){
-        axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
+        axios.defaults.headers.common['Authorization'] = sessionStorage.getItem('token');
 
-        axios.get(`http://localhost:8080/TicketMonster/api/orders/users/${parseInt(localStorage.getItem('userID'),10)}`)//userid
+        axios.get(`http://localhost:8080/TicketMonster/api/orders/users/${parseInt(sessionStorage.getItem('userID'),10)}`)//userid
         .then(res => { 
             console.log(res.data);
             this.setState({myTickets: res.data});

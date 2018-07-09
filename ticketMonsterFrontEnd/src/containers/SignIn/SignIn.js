@@ -18,12 +18,12 @@ class SignIn extends Component {
         let url = `http://localhost:8080/TicketMonster/api/users/${userName}&${passWord}`
         axios.get(url)
         .then((response)=> {
-          localStorage.setItem('token',response.headers.authorization);
-          axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
-          localStorage.setItem('userID',response.data.userID);
-          localStorage.setItem('username',response.data.username);
-          localStorage.setItem('userRole',response.data.userRole);
-           console.log( localStorage.getItem('token'),localStorage.getItem('userID'));
+          sessionStorage.setItem('token',response.headers.authorization);
+          axios.defaults.headers.common['Authorization'] = sessionStorage.getItem('token');
+          sessionStorage.setItem('userID',response.data.userID);
+          sessionStorage.setItem('username',response.data.username);
+          sessionStorage.setItem('userRole',response.data.userRole);
+           console.log( sessionStorage.getItem('token'),sessionStorage.getItem('userID'));
            setTimeout(() =>{
             if(response.data.userRole){
               // this.props.history = '/admins';

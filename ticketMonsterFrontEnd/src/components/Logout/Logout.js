@@ -4,10 +4,10 @@ import axios from 'axios';
 class Logout extends Component{
 
     componentDidMount(){
-        axios.post(`http://localhost:8080/TicketMonster/api/users/${parseInt(localStorage.getItem('userID'),10)}`)
+        axios.post(`http://localhost:8080/TicketMonster/api/users/${parseInt(sessionStorage.getItem('userID'),10)}`)
         .then( res => {
             if (res.status === 200){
-                localStorage.clear();
+                sessionStorage.clear();
             }
         })
         .then( res => {

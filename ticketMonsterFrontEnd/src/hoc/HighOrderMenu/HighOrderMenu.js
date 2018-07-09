@@ -13,7 +13,7 @@ export default function higherOrderMenu(Component) {
     
 
     componentDidMount(){
-      if((localStorage.getItem('token')===null) || (localStorage.getItem('token')===undefined)){
+      if((sessionStorage.getItem('token')===null) || (sessionStorage.getItem('token')===undefined)){
           this.setState({connected: false});
       }else{
         this.setState({connected: true});

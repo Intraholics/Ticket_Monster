@@ -51,13 +51,13 @@ class App extends Component {
         <Redirect from="*" to="/" />
       </Switch>
       
-            {localStorage.getItem('userRole')==='true' ? (
+            {sessionStorage.getItem('userRole')==='true' ? (
               <Switch>
                           <Redirect from='/events' to='/admins'/>
                           <Redirect from='/tocart' to='/admins'/>
                           <Redirect from='/mytickets' to='/admins'/> 
              </Switch>) : null }
-             {localStorage.getItem('userRole')==='false' ? (
+             {sessionStorage.getItem('userRole')==='false' ? (
               <Switch>
                           <Redirect from='/admins' to='/events'/>
                           <Redirect from='/users' to='/events'/>

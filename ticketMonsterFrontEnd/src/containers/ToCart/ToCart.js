@@ -11,8 +11,8 @@ class ToCart extends PureComponent {
     }
 
     componentDidMount(){
-        axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
-        axios.get(`http://localhost:8080/TicketMonster/api/cart/user/${parseInt(localStorage.getItem('userID'),10)}`)//userid
+        axios.defaults.headers.common['Authorization'] = sessionStorage.getItem('token');
+        axios.get(`http://localhost:8080/TicketMonster/api/cart/user/${parseInt(sessionStorage.getItem('userID'),10)}`)//userid
             .then(res => {
                 
                 this.setState({cartEvents: res.data});
@@ -40,7 +40,7 @@ class ToCart extends PureComponent {
         axios.delete(`http://localhost:8080/TicketMonster/api/cart/${id}`)
             .then(res => {
                 
-                axios.get(`http://localhost:8080/TicketMonster/api/cart/user/${parseInt(localStorage.getItem('userID'),10)}`)//userid
+                axios.get(`http://localhost:8080/TicketMonster/api/cart/user/${parseInt(sessionStorage.getItem('userID'),10)}`)//userid
                 .then(res => {
                     this.setState({cartEvents: res.data});
                 })

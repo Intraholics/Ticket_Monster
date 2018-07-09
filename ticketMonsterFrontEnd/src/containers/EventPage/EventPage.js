@@ -12,7 +12,7 @@ class EventPage extends Component {
     }
 
     componentDidMount(){ //get method
-        axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
+        axios.defaults.headers.common['Authorization'] = sessionStorage.getItem('token');
 
         this.getMethod();
     }
@@ -44,7 +44,7 @@ class EventPage extends Component {
             const post = {eventID: this.state.events[id - 1].eventID,
                         quantity: this.state.events[id - 1].quantity,
                         finalPrice: this.state.events[id - 1].finalPrice,
-                        userID: parseInt(localStorage.getItem('userID'),10)}; //kanw post to event pou ekana book
+                        userID: parseInt(sessionStorage.getItem('userID'),10)}; //kanw post to event pou ekana book
             console.log(post)
             axios.post('http://localhost:8080/TicketMonster/api/cart', post)
                 .then(response => {

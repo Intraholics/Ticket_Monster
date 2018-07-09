@@ -12,11 +12,11 @@ class AdminsPage extends Component {
     }
 
     componentDidMount(){ //get method
-        axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
-        if((localStorage.getItem('token')===null) || (localStorage.getItem('token')===undefined)){
+        axios.defaults.headers.common['Authorization'] = sessionStorage.getItem('token');
+        if((sessionStorage.getItem('token')===null) || (sessionStorage.getItem('token')===undefined)){
             this.props.history.push('/signin');
           }else{
-            if(!(localStorage.getItem('userRole'))){    
+            if(!(sessionStorage.getItem('userRole'))){    
               this.props.history.push('/events');
             }
           }

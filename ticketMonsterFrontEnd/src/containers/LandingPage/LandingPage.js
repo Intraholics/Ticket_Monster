@@ -6,14 +6,14 @@ class LandingPage extends Component {
 
 
   componentDidMount(){
-    if(localStorage.getItem('userRole')==='true'){
+    if(sessionStorage.getItem('userRole')==='true'){
       this.props.history.push('/admins')
     }
   }
   
   onClickHandler = () => {
 
-      if((localStorage.getItem('token')===null) || (localStorage.getItem('token')===undefined)){ //if signed out
+      if((sessionStorage.getItem('token')===null) || (sessionStorage.getItem('token')===undefined)){ //if signed out
         this.props.history.push('/signin');
       }else{
         this.props.history.push('/events');

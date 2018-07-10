@@ -43,7 +43,12 @@ class AdminsPage extends Component {
                         const newResponse = response.data;
                         console.log(newResponse);  //output example
                         this.setState({ orders: newResponse});
-                        //this.renderPagination();
+                        
+                        //Checking if current page is empty-if yes then it's the last page 
+                        let res = this.lastPageEmpty();
+                        if(res){
+                            this.setState({page: (this.state.page-1)});
+                        }
                     })
                     .catch(err => {
                         this.props.history.replace('/error');
@@ -97,18 +102,51 @@ class AdminsPage extends Component {
     itemclick(num){
         //console.log(num);
         this.setState({page: num});
-        let active = this.state.orders.length/10 + 1;
+        //let PagBtnsNum= this.state.orders.length/10 + 1;
         
 
     }
 
+    lastPageEmpty(){
+        let PagBtnsNum= this.state.orders.length/10 + 1;
+        PagBtnsNum= Math.floor(PagBtnsNum);
+        const list = this.state.orders;
+        const ref = (PagBtnsNum-1)*10;
+        const pageLength = list.slice(ref, ref+10).length;
+        return (pageLength===0);
+    }
+
+
     renderPagination() {
-        let active = this.state.orders.length/10 + 1;
+        let PagBtnsNum= this.state.orders.length/10 + 1;
+        PagBtnsNum= Math.floor(PagBtnsNum);
         let items = [];
-        for (let number = 1; number <= active; number++) {
+
+        //Checking if last page is empty
+        // const list = this.state.orders;
+        // const ref = (PagBtnsNum-1)*10;
+        // const pageLength = list.slice(ref, ref+10).length;
+        // console.log("Page length:" + pageLength);
+        // if(pageLength===0){
+            
+        let res = this.lastPageEmpty();
+        //console.log(res);
+        if(res){
+            PagBtnsNum=PagBtnsNum-1;
+        }
+
+       // console.log("current page length:" + pageLength);
+
+        
+        for (let number = 1; number <= PagBtnsNum; number++) {
+            console.log("PagBtnsNum:" + PagBtnsNum);
+            console.log("number:" + number);
+            
+            //const ref = (number*10)<1;
           items.push(
-            <Pagination.Item active={number === active} key={number} id={number} onClick={()=>this.itemclick(number)}>{number}</Pagination.Item>
+            <Pagination.Item active={number === this.state.page} key={number} id={number} onClick={()=>this.itemclick(number)}>{number}</Pagination.Item>
           );
+        
         }
         
         return (

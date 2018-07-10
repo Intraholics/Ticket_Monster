@@ -95,7 +95,6 @@ public class EventsResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response addEvent(@HeaderParam("Authorization") Integer Token,Events event1){ 
         if(valid.checkIfValidated(Token)){
-            event1.setDate(event1.getDate());
             event.addEvent(event1);
             return Response.ok(event1).build();
         }

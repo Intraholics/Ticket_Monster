@@ -44,15 +44,7 @@ public class EventsDao implements EventsDaoLocal{
     /*Adds a new Event object and stores it on the Database*/
     @Override
     public boolean addEvent(Events event) {
-            Instant instant = LocalDateTime.now().toInstant(ZoneOffset.ofHours(3));
-            Date date = Date.from(instant);
-        
-        if (date.compareTo(event.getDate())<0) {
-            return false;
-        }
-        else {
         em.persist(event);
-        }
         return true;
     }
 

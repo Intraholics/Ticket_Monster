@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const TicketEvent = (props) => {
     return(
-        <tr>
+        <tr onClick={props.click}>
         <td>{props.num}</td>
         <td>{props.name}</td>
         <td>{props.quantity}</td>

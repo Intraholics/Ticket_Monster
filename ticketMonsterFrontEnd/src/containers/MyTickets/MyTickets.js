@@ -7,7 +7,8 @@ import TicketEvent from '../../components/TicketEvent/TicketEvent';
 class MyTickets extends Component{
     state = {
         myTickets: [],
-        page: 1
+        page: 1,
+        userDetails: {}
     }
 
     componentDidMount(){
@@ -23,6 +24,38 @@ class MyTickets extends Component{
         });
     }
 
+    onClickHandler = (id) => {
+        axios.get(`http://localhost:8080/TicketMonster/api/users/${parseInt(sessionStorage.getItem('userID'),10)}`)//userid
+            .then(res2 => {
+                console.log(res2.data);
+                this.setState({userDetails: res2.data});
+            })
+            .then(re2 => {
+                var doc = new jsPDF();
+                doc.setFillColor(200);
+                doc.rect(0, 0, 300, 300, "F");
+                doc.setTextColor(150);
+                doc.setFontSize(25);
+                doc.text('TicketMonster', 70, 15);
+
+                doc.setTextColor(0,0,0);
+                doc.setFontSize(15);
+                doc.text('Event Name: ' + this.state.myTickets[id].eventDescr, 70, 50);
+                doc.text('Name: ' + this.state.userDetails.name, 70, 65);
+                doc.text('Surname: ' + this.state.userDetails.surname, 70, 80);
+                doc.text('E-mail: ' + this.state.userDetails.email, 70, 95);
+                doc.text('Quantity: ' + this.state.myTickets[id].quantity.toString(), 70, 110);
+                doc.text('Price: ' + this.state.myTickets[id].finalPrice.toString(), 70, 125);
+                doc.text('Purchase Date: ' + this.state.myTickets[id].purchaseDate, 70, 140);
+                doc.save('a4.pdf');
+            })
+            .catch(err => {
+                this.props.history.replace('/error');
+            });
+
+    };
+
+
     renderList() {
         const list = this.state.myTickets;
         const ref = (this.state.page-1)*10;
@@ -35,7 +68,8 @@ class MyTickets extends Component{
                           name={event.eventDescr}
                           quantity={event.quantity}
                           finalPrice={event.finalPrice}
-                          purchaseDate={event.purchaseDate}/>
+                          purchaseDate={event.purchaseDate}
+                          click = {() => this.onClickHandler(i)}/>
          });
 
 

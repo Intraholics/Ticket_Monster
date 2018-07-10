@@ -3,6 +3,7 @@ import { Table,Pagination } from 'react-bootstrap';
 import axios from 'axios';
 import './MyTickets.css'
 import TicketEvent from '../../components/TicketEvent/TicketEvent';
+import jsPDF from 'jspdf';
 
 class MyTickets extends Component{
     state = {

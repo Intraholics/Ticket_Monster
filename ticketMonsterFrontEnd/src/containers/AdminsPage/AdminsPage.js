@@ -45,9 +45,11 @@ class AdminsPage extends Component {
                         this.setState({ orders: newResponse});
                         
                         //Checking if current page is empty-if yes then it's the last page 
-                        let res = this.lastPageEmpty();
-                        if(res){
+                        let empty = this.lastPageEmpty();
+                        if(empty){
+                            if(this.state.page===this.lastPage()){
                             this.setState({page: (this.state.page-1)});
+                            }
                         }
                     })
                     .catch(err => {
@@ -108,12 +110,15 @@ class AdminsPage extends Component {
     }
 
     lastPageEmpty(){
-        let PagBtnsNum= this.state.orders.length/10 + 1;
-        PagBtnsNum= Math.floor(PagBtnsNum);
         const list = this.state.orders;
+        let PagBtnsNum= list.length/10 + 1;
+        PagBtnsNum= Math.floor(PagBtnsNum);
         const ref = (PagBtnsNum-1)*10;
         const pageLength = list.slice(ref, ref+10).length;
         return (pageLength===0);
+    }
+    lastPage(){
+        return this.state.orders.length/10 + 1;
     }
 
 
@@ -121,23 +126,17 @@ class AdminsPage extends Component {
         let PagBtnsNum= this.state.orders.length/10 + 1;
         PagBtnsNum= Math.floor(PagBtnsNum);
         let items = [];
-
-        //Checking if last page is empty
-        // const list = this.state.orders;
-        // const ref = (PagBtnsNum-1)*10;
-        // const pageLength = list.slice(ref, ref+10).length;
-        // console.log("Page length:" + pageLength);
-        // if(pageLength===0){
             
-        let res = this.lastPageEmpty();
+        let empty = this.lastPageEmpty();
         //console.log(res);
-        if(res){
+        if(empty){
             PagBtnsNum=PagBtnsNum-1;
         }
+        
 
        // console.log("current page length:" + pageLength);
 
-        
+        if(PagBtnsNum>1){
         for (let number = 1; number <= PagBtnsNum; number++) {
             console.log("PagBtnsNum:" + PagBtnsNum);
             console.log("number:" + number);
@@ -146,8 +145,8 @@ class AdminsPage extends Component {
           items.push(
             <Pagination.Item active={number === this.state.page} key={number} id={number} onClick={()=>this.itemclick(number)}>{number}</Pagination.Item>
           );
-        
         }
+    }
         
         return (
           <div className="alignCenter">

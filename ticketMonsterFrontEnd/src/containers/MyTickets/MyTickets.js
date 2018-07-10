@@ -19,6 +19,7 @@ class MyTickets extends Component{
         .then(res => { 
             console.log(res.data);
             this.setState({myTickets: res.data});
+
         })
         .catch(err => {
             this.props.history.replace('/error');
@@ -98,12 +99,15 @@ class MyTickets extends Component{
         }
 
         renderPagination() {
-            let active = this.state.myTickets.length/10 + 1;
+            let PagBtnsNum = this.state.myTickets.length/10 + 1;
             let items = [];
-            for (let number = 1; number <= active; number++) {
+
+            if(PagBtnsNum>1){
+            for (let number = 1; number <= PagBtnsNum; number++) {
               items.push(
-                <Pagination.Item active={number === active} key={number} id={number} onClick={()=>this.itemclick(number)}>{number}</Pagination.Item>
+                <Pagination.Item active={number === this.state.page} key={number} id={number} onClick={()=>this.itemclick(number)}>{number}</Pagination.Item>
               );
+            }
             }
             
             return (

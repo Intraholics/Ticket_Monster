@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table } from 'react-bootstrap';
+import { Table, Pagination } from 'react-bootstrap';
 import Order from '../../components/Order/Order';
 import axios from 'axios';
 import './AdminsPage.css';
@@ -8,7 +8,8 @@ import './AdminsPage.css';
 class AdminsPage extends Component {
 
     state = {
-        orders : []
+        orders : [],
+        page: 1
     }
 
     componentDidMount(){ //get method
@@ -42,6 +43,7 @@ class AdminsPage extends Component {
                         const newResponse = response.data;
                         console.log(newResponse);  //output example
                         this.setState({ orders: newResponse});
+                        //this.renderPagination();
                     })
                     .catch(err => {
                         this.props.history.replace('/error');
@@ -53,21 +55,27 @@ class AdminsPage extends Component {
     
     }
 
-  render() {
-      const orders = this.state.orders.map(event => {
-          return <Order  key={event.orderID}
-                          mykey={event.orderID}
-                          username={event.username}
-                          date={event.purchaseDate} 
-                          quantity={event.quantity} 
-                          finalprice={event.finalPrice} 
-                          click={() => this.onClickHandler(event.orderID)}
-                        />
-      });
-    return (
-      <div className="App">
-      <h1 className='Adminsh1'>All Orders</h1>
-        <Table striped bordered condensed hover responsive>
+
+    renderList() {
+        const list = this.state.orders;
+        const ref = (this.state.page-1)*10;
+       // console.log(ref);
+        const pageList = list.slice(ref, ref+10);
+         const orders = pageList.map((event,i) => {
+            return <Order  key={event.orderID}
+                            // mykey={event.orderID}
+                            mykey={i+ref+1}
+                            username={event.username}
+                            date={event.purchaseDate} 
+                            quantity={event.quantity} 
+                            finalprice={event.finalPrice} 
+                            click={() => this.onClickHandler(event.orderID)}
+                          />
+        });
+
+
+        return(
+            <Table striped bordered condensed hover responsive>
             <thead>
                 <tr>
                 <th>Order Id</th>
@@ -81,7 +89,44 @@ class AdminsPage extends Component {
             <tbody>
             {orders}
             </tbody>
-        </Table>
+           </Table>
+          );
+        }
+
+
+    itemclick(num){
+        //console.log(num);
+        this.setState({page: num});
+        let active = this.state.orders.length/10 + 1;
+        
+
+    }
+
+    renderPagination() {
+        let active = this.state.orders.length/10 + 1;
+        let items = [];
+        for (let number = 1; number <= active; number++) {
+          items.push(
+            <Pagination.Item active={number === active} key={number} id={number} onClick={()=>this.itemclick(number)}>{number}</Pagination.Item>
+          );
+        }
+        
+        return (
+          <div className="alignCenter">
+            <Pagination bsSize="large">{items}</Pagination>
+            <br />
+          </div>
+        );
+        
+      }
+
+  render() {
+ 
+    return (
+      <div className="App">
+      <h1 className='Adminsh1'>All Orders</h1>
+      {this.renderList()}
+      {this.renderPagination()}
       </div>
     );
   }

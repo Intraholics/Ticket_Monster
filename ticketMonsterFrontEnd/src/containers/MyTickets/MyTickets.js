@@ -34,6 +34,7 @@ class MyTickets extends Component{
             })
             .then(re2 => {
                 var doc = new jsPDF();
+                const email = this.state.userDetails.email.substring(0, this.state.userDetails.email.lastIndexOf("@"));
                 doc.setFillColor(200);
                 doc.rect(0, 0, 300, 300, "F");
                 doc.setTextColor(150);
@@ -49,7 +50,8 @@ class MyTickets extends Component{
                 doc.text('Quantity: ' + this.state.myTickets[id].quantity.toString(), 70, 110);
                 doc.text('Price: ' + this.state.myTickets[id].finalPrice.toString(), 70, 125);
                 doc.text('Purchase Date: ' + this.state.myTickets[id].purchaseDate, 70, 140);
-                doc.save('a4.pdf');
+                doc.save(`${email}.pdf`);
+                
             })
             .catch(err => {
                 this.props.history.replace('/error');

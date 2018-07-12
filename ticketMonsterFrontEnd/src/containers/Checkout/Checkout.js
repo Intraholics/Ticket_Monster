@@ -78,6 +78,7 @@ class Checkout extends Component{
      });
     }
 
+
     onSubmitHandler = (e) => {
         e.preventDefault();
         this.setState({gif: true});
@@ -172,16 +173,16 @@ class Checkout extends Component{
                             <FormGroup controlId="phone">
                                 <ControlLabel>Phone</ControlLabel>
                                 <FormControl type="text"
-                                            maxLength='12'
-                                            placeholder="212-455-1120"
+                                            maxLength='11'
+                                            placeholder="210 4551120"
                                             value={this.state.phone}
                                             onChange={(e) => this.onPhoneChange(e)}/>
                             </FormGroup>
                             <FormGroup controlId="creditCard">
                                 <ControlLabel>Credit Card</ControlLabel>
                                 <FormControl type="text"
-                                            maxLength='19'
-                                            placeholder="0004 **** **** ****"
+                                            maxLength='16'
+                                            placeholder="0004************"
                                             value={this.state.creditCard}
                                             onChange={(e) => this.onCreditChange(e)} />
                             </FormGroup>

@@ -29,7 +29,7 @@ class LandingPage extends Component {
         <Animated animationIn="fadeInUp" isVisible={true}>
           <div className="firstContentArea">
               <h1>Ticket <span>Monster</span></h1>
-              <h3>Life is a ticket to the greatest show in the world!</h3>
+             {sessionStorage.getItem('username') ? <h3>We've been expecting you, {sessionStorage.getItem('username')}</h3> :<h3>Life is a ticket to the greatest show in the world!</h3>}
               <button  onClick={() => this.onClickHandler()} className="btn">Book your ticket!</button>
 
           </div>

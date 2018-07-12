@@ -3,6 +3,7 @@ import { Table } from 'react-bootstrap';
 import User from '../../../components/Users/Users';
 import axios from 'axios';
 import './AdminsUsers.css';
+import swal from 'sweetalert';
 
 class AdminsUsers extends Component {
 
@@ -44,7 +45,7 @@ class AdminsUsers extends Component {
         .then(response => {
             console.log(response);  //output example
             this.getUsers();
-            console.log('Reseted');
+            swal("Success!", "Password Reseted", "success");
             
         })
         .catch(err => {

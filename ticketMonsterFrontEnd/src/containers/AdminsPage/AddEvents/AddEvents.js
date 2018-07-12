@@ -5,7 +5,6 @@ import axios from 'axios';
 import swal from 'sweetalert';
 
 
-
 class AddEvents extends Component {
 
     state = { 

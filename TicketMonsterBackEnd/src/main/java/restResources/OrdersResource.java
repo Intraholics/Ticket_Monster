@@ -8,6 +8,7 @@ package restResources;
 import intraholics.ticketmonster.Entities.Cart;
 import intraholics.ticketmonster.Entities.Events;
 import intraholics.ticketmonster.Entities.Orders;
+import intraholics.ticketmonster.Mail.EmailSessionBean;
 import intraholics.ticketmonster.Manager.CartDaoLocal;
 import intraholics.ticketmonster.Manager.EventsDaoLocal;
 import java.util.List;
@@ -48,6 +49,8 @@ public class OrdersResource {
     private ValidationBeanLocal valid;
     @Inject 
     private EventsDaoLocal event;
+    @Inject 
+    private EmailSessionBean mail;
    
     //*ENDPOINT to get all order objects from the database
     @GET
@@ -143,8 +146,11 @@ public class OrdersResource {
     @Path("/orders")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes (MediaType.APPLICATION_JSON)
-    public Response addOrders(@HeaderParam("Authorization") Integer Token,List<Orders> order1){
+    public Response addOrders(@HeaderParam("Authorization") Integer Token,List<Orders> order1) throws Exception{
          if(valid.checkIfValidated(Token)){
+        	 Integer Price = 0;
+             String creditcard=order1.get(0).getCreditcard();
+             String email=cart.findCartByID(order1.get(0).getCartID().getCartID()).getUserID().getEmail();
              for (int i=0; i<order1.size(); i++){
                  Instant instant = LocalDateTime.now().toInstant(ZoneOffset.ofHours(3));
                  Date date = Date.from(instant);
@@ -153,7 +159,10 @@ public class OrdersResource {
                  Cart cartfound=cart.findCartByID(order1.get(i).getCartID().getCartID());
                  cartfound.setCheckout(true);
                  cart.updateCart(cartfound);
+                 
+                 Price=Price + cart.findCartByID(order1.get(i).getCartID().getCartID()).getFinalPrice();
              }
+             mail.SendReceipt(email, Price.toString(), creditcard);
              return Response.ok(order1).build();
          }
          else {
@@ -181,13 +190,18 @@ public class OrdersResource {
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces (MediaType.APPLICATION_JSON)
-    public Response deleteOrderById (@HeaderParam("Authorization") Integer Token,@PathParam("id")Integer id){
+    public Response deleteOrderById (@HeaderParam("Authorization") Integer Token,@PathParam("id")Integer id) throws Exception{
         if(valid.checkIfValidated(Token)){
-            Cart Cartplaced=order.findOrderById(id).getCartID();
+        	Orders orderfound = order.findOrderById(id);
+        	String email=orderfound.getCartID().getUserID().getEmail();
+        	Integer sum=orderfound.getCartID().getFinalPrice();
+        	       	
+        	Cart Cartplaced=order.findOrderById(id).getCartID();
             Events eventtoupdate=cart.findCartByID(Cartplaced.getCartID()).getEventID();
             eventtoupdate.setTicketsLeft(eventtoupdate.getTicketsLeft()+Cartplaced.getQuantity());
             event.updateEvent(eventtoupdate);
             order.deleteOrderById(id);
+            mail.SendRefund(email, sum.toString());
             return Response.ok().build();
         }
         else {

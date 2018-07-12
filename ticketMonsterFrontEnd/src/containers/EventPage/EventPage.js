@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Table } from 'react-bootstrap';
+import { Animated } from "react-animated-css";
 import Event from '../../components/Event/Event';
 import axios from 'axios';
 import swal from 'sweetalert';
@@ -87,24 +88,26 @@ class EventPage extends Component {
                         />
       });
     return (
-      <div className="App">
-        <h1 className='Eventsh1'>Available Events</h1>
-        <Table striped bordered condensed hover responsive>
-            <thead>
-                <tr>
-                <th>Event Name</th>
-                <th>Date</th>
-                <th>Tickets left</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Book</th>
-                </tr>
-            </thead>
-            <tbody>
-            {events}
-            </tbody>
-        </Table>
-      </div>
+        <Animated animationIn="fadeIn" isVisible={true}>
+        <div className="App">
+            <h1 className='Eventsh1'>Available Events</h1>
+            <Table striped bordered condensed hover responsive>
+                <thead>
+                    <tr>
+                    <th>Event Name</th>
+                    <th>Date</th>
+                    <th>Tickets left</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Book</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {events}
+                </tbody>
+            </Table>
+        </div>
+        </Animated>
     );
   }
 }

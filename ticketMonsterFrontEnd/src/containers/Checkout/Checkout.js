@@ -1,4 +1,5 @@
 import React,{ Component } from 'react';
+import { Animated } from "react-animated-css";
 import axios from 'axios';
 import { Table, Button, FormGroup, FormControl,ControlLabel } from 'react-bootstrap';
 import CheckoutEvent from '../../components/CheckoutEvent/CheckoutEvent';
@@ -126,71 +127,73 @@ class Checkout extends Component{
             }
 
         return(
-        <div className='App'>
-            <h1 className='Checkouth1'>Checkout</h1>
-            <Table bordered condensed>
-                <thead>
-                    <tr>
-                    <th>Event Name</th>
-                    <th>Quantity</th>
-                    <th>Final Price</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {checkoutEvents}
-                </tbody>
-            </Table>
-            <h4 className='Checkouth2'>Please complete the form below</h4>
-            <div className="PayForm">
-                <form onSubmit={this.onSubmitHandler}>
-                    <FormGroup controlId="phone">
-                        <ControlLabel>Name</ControlLabel>
-                        <FormControl value={this.state.name} 
-                                     autoFocus 
-                                     type="text" 
-                                     onChange={(e) => this.onNameChange(e)} />
-                    </FormGroup>
-                    <FormGroup>
-                        <ControlLabel>Surname</ControlLabel>
-                        <FormControl value={this.state.surname}
-                                     type="text"
-                                     onChange={(e) => this.onSurnameChange(e)} />
-                    </FormGroup>
-                    <FormGroup>
-                        <ControlLabel>Email</ControlLabel>
-                        <FormControl value={this.state.email} 
-                                     type="email"
-                                     placeholder="johntsou@example.com" 
-                                     onChange={(e) => this.onEmailChange(e)} />
-                    </FormGroup>
-                    <FormGroup>
-                        <ControlLabel>Address</ControlLabel>
-                        <FormControl type="text" placeholder="354 Fifth Avenue" />
-                    </FormGroup>
-                    <FormGroup controlId="phone">
-                        <ControlLabel>Phone</ControlLabel>
-                        <FormControl type="text"
-                                     maxLength='12'
-                                     placeholder="212-455-1120"
-                                     value={this.state.phone}
-                                     onChange={(e) => this.onPhoneChange(e)}/>
-                    </FormGroup>
-                    <FormGroup controlId="creditCard">
-                        <ControlLabel>Credit Card</ControlLabel>
-                        <FormControl type="text"
-                                     maxLength='19'
-                                     placeholder="0004 **** **** ****"
-                                     value={this.state.creditCard}
-                                     onChange={(e) => this.onCreditChange(e)} />
-                    </FormGroup>
-                    {thegif}
-                    <Button bsStyle="info"
-                            bsClass="btnInf2"
-                            type="submit"
-                            >Checkout</Button>
-                </form>
-            </div>
-        </div>
+            <Animated animationIn="fadeIn" isVisible={true}>
+                <div className='App'>
+                    <h1 className='Checkouth1'>Checkout</h1>
+                    <Table bordered condensed>
+                        <thead>
+                            <tr>
+                            <th>Event Name</th>
+                            <th>Quantity</th>
+                            <th>Final Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {checkoutEvents}
+                        </tbody>
+                    </Table>
+                    <h4 className='Checkouth2'>Please complete the form below</h4>
+                    <div className="PayForm">
+                        <form onSubmit={this.onSubmitHandler}>
+                            <FormGroup controlId="phone">
+                                <ControlLabel>Name</ControlLabel>
+                                <FormControl value={this.state.name} 
+                                            autoFocus 
+                                            type="text" 
+                                            onChange={(e) => this.onNameChange(e)} />
+                            </FormGroup>
+                            <FormGroup>
+                                <ControlLabel>Surname</ControlLabel>
+                                <FormControl value={this.state.surname}
+                                            type="text"
+                                            onChange={(e) => this.onSurnameChange(e)} />
+                            </FormGroup>
+                            <FormGroup>
+                                <ControlLabel>Email</ControlLabel>
+                                <FormControl value={this.state.email} 
+                                            type="email"
+                                            placeholder="johntsou@example.com" 
+                                            onChange={(e) => this.onEmailChange(e)} />
+                            </FormGroup>
+                            <FormGroup>
+                                <ControlLabel>Address</ControlLabel>
+                                <FormControl type="text" placeholder="354 Fifth Avenue" />
+                            </FormGroup>
+                            <FormGroup controlId="phone">
+                                <ControlLabel>Phone</ControlLabel>
+                                <FormControl type="text"
+                                            maxLength='12'
+                                            placeholder="212-455-1120"
+                                            value={this.state.phone}
+                                            onChange={(e) => this.onPhoneChange(e)}/>
+                            </FormGroup>
+                            <FormGroup controlId="creditCard">
+                                <ControlLabel>Credit Card</ControlLabel>
+                                <FormControl type="text"
+                                            maxLength='19'
+                                            placeholder="0004 **** **** ****"
+                                            value={this.state.creditCard}
+                                            onChange={(e) => this.onCreditChange(e)} />
+                            </FormGroup>
+                            {thegif}
+                            <Button bsStyle="info"
+                                    bsClass="btnInf2"
+                                    type="submit"
+                                    >Checkout</Button>
+                        </form>
+                    </div>
+                </div>
+            </Animated>
         );
     }
 }

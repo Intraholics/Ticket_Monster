@@ -1,9 +1,10 @@
 import React,{ Component } from 'react';
 import { Table,Pagination } from 'react-bootstrap';
+import { Animated } from "react-animated-css";
 import axios from 'axios';
 import './MyTickets.css'
 import TicketEvent from '../../components/TicketEvent/TicketEvent';
-import jsPDF from 'jspdf';
+import pdfGenerator from './pdfGenerator';
 
 class MyTickets extends Component{
     state = {
@@ -33,25 +34,10 @@ class MyTickets extends Component{
                 this.setState({userDetails: res2.data});
             })
             .then(re2 => {
-                var doc = new jsPDF();
-                const email = this.state.userDetails.email.substring(0, this.state.userDetails.email.lastIndexOf("@"));
-                doc.setFillColor(200);
-                doc.rect(0, 0, 300, 300, "F");
-                doc.setTextColor(150);
-                doc.setFontSize(25);
-                doc.text('TicketMonster', 70, 15);
+                const myTickets = {...this.state.myTickets};
+                const userDetails = {...this.state.userDetails};
 
-                doc.setTextColor(0,0,0);
-                doc.setFontSize(15);
-                doc.text('Event Name: ' + this.state.myTickets[id].eventDescr, 70, 50);
-                doc.text('Name: ' + this.state.userDetails.name, 70, 65);
-                doc.text('Surname: ' + this.state.userDetails.surname, 70, 80);
-                doc.text('E-mail: ' + this.state.userDetails.email, 70, 95);
-                doc.text('Quantity: ' + this.state.myTickets[id].quantity.toString(), 70, 110);
-                doc.text('Price: ' + this.state.myTickets[id].finalPrice.toString(), 70, 125);
-                doc.text('Purchase Date: ' + this.state.myTickets[id].purchaseDate, 70, 140);
-                doc.save(`${email}.pdf`);
-                
+                pdfGenerator(userDetails.name,userDetails.surname,userDetails.email,myTickets[id].eventDescr,myTickets[id].quantity,myTickets[id].finalPrice,myTickets[id].purchaseDate);
             })
             .catch(err => {
                 this.props.history.replace('/error');
@@ -102,13 +88,14 @@ class MyTickets extends Component{
 
         renderPagination() {
             let PagBtnsNum = this.state.myTickets.length/10 + 1;
+            PagBtnsNum = Math.floor(PagBtnsNum);
             let items = [];
 
             if(PagBtnsNum>1){
-            for (let number = 1; number <= PagBtnsNum; number++) {
-              items.push(
-                <Pagination.Item active={number === this.state.page} key={number} id={number} onClick={()=>this.itemclick(number)}>{number}</Pagination.Item>
-              );
+                for (let number = 1; number <= PagBtnsNum; number++) {
+                    items.push(
+                        <Pagination.Item active={number === this.state.page} key={number} id={number} onClick={()=>this.itemclick(number)}>{number}</Pagination.Item>
+                    );
             }
             }
             
@@ -124,11 +111,13 @@ class MyTickets extends Component{
     render(){
        
         return(
-            <div className="App">
-               <h1 className='ticketsh1'>My tickets</h1>
-               {this.renderList()}
-               {this.renderPagination()}
-           </div>
+            <Animated animationIn="fadeIn" isVisible={true}>
+                <div className="App">
+                <h1 className='ticketsh1'>My tickets</h1>
+                {this.renderList()}
+                {this.renderPagination()}
+            </div>
+           </Animated>
            );
     }
 }

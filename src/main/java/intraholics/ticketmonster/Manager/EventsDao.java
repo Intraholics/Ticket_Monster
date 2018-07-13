@@ -6,11 +6,6 @@
 package intraholics.ticketmonster.Manager;
 
 import intraholics.ticketmonster.Entities.Events;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;

@@ -6,6 +6,7 @@
 package intraholics.ticketmonster.security;
 
 import intraholics.ticketmonster.Entities.User;
+import intraholics.ticketmonster.SupplementaryClasses.UserLogged;
 import java.util.List;
 import javax.ejb.Singleton;
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class ValidationBean implements ValidationBeanLocal{
 
     
     @Override
-    public Integer addToValidated(User UserFound){    
+    public Integer addToValidated(UserLogged UserFound){    
         if (UserFound==null){
             return null;
         }

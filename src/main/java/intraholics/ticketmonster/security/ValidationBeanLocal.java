@@ -6,6 +6,7 @@
 package intraholics.ticketmonster.security;
 
 import intraholics.ticketmonster.Entities.User;
+import intraholics.ticketmonster.SupplementaryClasses.UserLogged;
 import javax.json.JsonObject;
 
 /**
@@ -14,7 +15,7 @@ import javax.json.JsonObject;
  */
 public interface ValidationBeanLocal {
     
-    public Integer addToValidated(User UserFound);
+    public Integer addToValidated(UserLogged UserFound);
     public boolean checkIfValidated(Integer token);
     public boolean removeFromValidated(Integer token);
     

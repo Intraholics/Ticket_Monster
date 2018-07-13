@@ -6,7 +6,6 @@
 package intraholics.ticketmonster.Manager;
 
 import intraholics.ticketmonster.Entities.Cart;
-import intraholics.ticketmonster.Entities.Events;
 import intraholics.ticketmonster.Entities.User;
 import java.util.List;
 import javax.ejb.Stateless;

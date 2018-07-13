@@ -3,20 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package restResources;
+package intraholics.ticketmonster.RestResources;
 
 import intraholics.ticketmonster.Entities.User;
-import intraholics.ticketmonster.Mail.EmailSessionBean;
-import intraholics.ticketmonster.Manager.UserDaoLocal;
-import intraholics.ticketmonster.security.Encryption;
+import intraholics.ticketmonster.SupplementaryClasses.UserLogged;
 import intraholics.ticketmonster.security.ValidationBeanLocal;
-import java.util.List;
-import java.util.Random;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.inject.Inject;
-import javax.json.Json;
-import javax.json.JsonObject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -28,6 +21,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.HeaderParam;
+import intraholics.ticketmonster.Business.UsersBusinessLocal;
+import javax.inject.Inject;
 
 /**
  *
@@ -41,14 +36,11 @@ import javax.ws.rs.HeaderParam;
 public class UserResource {
     
     
-    @EJB
-    private UserDaoLocal user;
+    @Inject
+    private UsersBusinessLocal user1;
     @Inject
     private ValidationBeanLocal valid;
-    @Inject 
-    private EmailSessionBean mail;
-    @Inject 
-    private Encryption encryted;
+
     
     
     /*ENDPOINT to get all users on the database*/
@@ -56,8 +48,7 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAllUsers(@HeaderParam("Authorization") Integer Token){
         if(valid.checkIfValidated(Token)){
-            List<User> users=user.findAllUsers();
-            return Response.ok(users).build();
+            return Response.ok(user1.findAllUsers()).build();
         }
         else {
             return Response.status(Response.Status.UNAUTHORIZED).build();
@@ -70,8 +61,7 @@ public class UserResource {
     @Path("/{id}")
     public Response findUserById(@HeaderParam("Authorization") Integer Token,@PathParam("id") Integer id){
         if (valid.checkIfValidated(Token)){
-            User found=user.findUserById(id);
-            return Response.ok(found).build();
+            return Response.ok(user1.findUserById(id)).build();
         }
         else {
            return Response.status(Response.Status.UNAUTHORIZED).build(); 
@@ -86,14 +76,10 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/{Username}&{Pass}")
     public Response logged_user(@PathParam("Username") String username,@PathParam("Pass") String pass ){
-     User found=user.checkLoginCredentials(username, pass);
+     UserLogged found=user1.logUser(username, pass);
      if(found!=null){
-     JsonObject JsonUser=Json.createObjectBuilder()
-             .add("userID",found.getUserID())
-             .add("username",found.getUsername())
-             .add("userRole",found.getUserRole()).build();
-     Integer token=valid.addToValidated(found);
-        return Response.ok(JsonUser).header("Access-Control-Expose-Headers","Authorization").header("Authorization", token).build();
+         Integer token=valid.addToValidated(found);
+        return Response.ok(found).header("Access-Control-Expose-Headers","Authorization").header("Authorization", token).build();
      }
      else {
          return Response.status(Response.Status.UNAUTHORIZED).build();
@@ -119,10 +105,9 @@ public class UserResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addUser(@HeaderParam("Authorization") Integer Token,User user1){ 
-            user1.setPassword(encryted.encryptMessage(user1.getPassword()));
-            user.addUser(user1);
-            return Response.ok(user1).build(); 
+    public Response addUser(@HeaderParam("Authorization") Integer Token,User user){
+        user1.addUsers(user);
+        return Response.ok().build(); 
     }
     
     /*ENDPOINT to update an existing user's info on the database.
@@ -130,10 +115,10 @@ public class UserResource {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateUser(@HeaderParam("Authorization") Integer Token,User user1){
+    public Response updateUser(@HeaderParam("Authorization") Integer Token,User user){
         if(valid.checkIfValidated(Token)){
-            user.updateUser(user1);
-            return Response.ok(user1).build();
+            user1.updateUsers(user);
+            return Response.ok().build();
         }
         else {
             return Response.status(Response.Status.UNAUTHORIZED).build();
@@ -146,21 +131,11 @@ public class UserResource {
     @Path("/{id}&{role}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateUser(@HeaderParam("Authorization") Integer Token,@PathParam("role") boolean role,@PathParam("id")Integer id){
+    public Response updateUser(@HeaderParam("Authorization") Integer Token,@PathParam("role") boolean role,@PathParam("id")Integer id) throws Exception{
         if (valid.checkIfValidated(Token)){
-            if(role==true){
-               User usertoupdate=user.findUserById(id);
-               boolean roletoggle=usertoupdate.getUserRole();
-                   usertoupdate.setUserRole(!roletoggle);
-                   user.updateUser(usertoupdate);
-            }
-            else {
-            String newpass=PasswordGenerator();
-            user.updateUser(id,newpass);
-            mail.sendEmail("kos_hatz@hotmail.com","Test mail", "Try me");
-            }
+            user1.updateUsers(id,role);
             return Response.ok().build();
-        }
+            }     
         else{
            return Response.status(Response.Status.UNAUTHORIZED).build(); 
         }
@@ -173,26 +148,11 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteUser(@HeaderParam("Authorization") Integer Token,@PathParam("id") Integer id){
         if(valid.checkIfValidated(Token)){
-            user.deleteUserById(id);
+            user1.deleteUsers(id);
             return Response.ok().build();
         }
         else {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
     }
-    
-    /*Random String password generator*/
-     public String PasswordGenerator()
-    {
-    	String s = "";
-		Random random = new Random();
-        for (int i = 0; i < 12; i++)
-        {
-            int randomNumber = random.nextInt(122) + 44;
-            char c = (char)randomNumber;            
-            s = s + Character.toString(c);            
-        } 
-        return s;
-    }
-     
 }

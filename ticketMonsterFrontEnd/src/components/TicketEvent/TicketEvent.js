@@ -18,7 +18,8 @@ TicketEvent.propTypes = {
     quantity: PropTypes.number,
     finalPrice: PropTypes.number,
     purchaseDate: PropTypes.string,
-    num: PropTypes.number
+    num: PropTypes.number,
+    click: PropTypes.func
   }
 
 export default TicketEvent;

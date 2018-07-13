@@ -50,7 +50,7 @@ class App extends Component {
         <Route path='/error' exact component={ErrorPage} />
         <Redirect from="*" to="/" />
       </Switch>
-      
+            {/* Guards */}
             {sessionStorage.getItem('userRole')==='true' ? (
               <Switch>
                           <Redirect from='/events' to='/admins'/>

@@ -18,9 +18,7 @@ class MyTickets extends Component{
 
         axios.get(`http://localhost:8080/TicketMonster/api/orders/users/${parseInt(sessionStorage.getItem('userID'),10)}`)//userid
         .then(res => { 
-            console.log(res.data);
             this.setState({myTickets: res.data});
-
         })
         .catch(err => {
             this.props.history.replace('/error');
@@ -30,7 +28,6 @@ class MyTickets extends Component{
     onClickHandler = (id) => {
         axios.get(`http://localhost:8080/TicketMonster/api/users/${parseInt(sessionStorage.getItem('userID'),10)}`)//userid
             .then(res2 => {
-                console.log(res2.data);
                 this.setState({userDetails: res2.data});
             })
             .then(re2 => {
@@ -49,7 +46,6 @@ class MyTickets extends Component{
     renderList() {
         const list = this.state.myTickets;
         const ref = (this.state.page-1)*10;
-       // console.log(ref);
         const pageList = list.slice(ref, ref+10);
         const tickets = pageList.map((event,i) => {
             return  <TicketEvent 
@@ -82,7 +78,6 @@ class MyTickets extends Component{
         }
 
         itemclick(num){
-            //console.log(num);
             this.setState({page: num});
         }
 

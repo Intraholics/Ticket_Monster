@@ -23,11 +23,8 @@ class SignIn extends Component {
           sessionStorage.setItem('userID',response.data.userID);
           sessionStorage.setItem('username',response.data.username);
           sessionStorage.setItem('userRole',response.data.userRole);
-           console.log( sessionStorage.getItem('token'),sessionStorage.getItem('userID'));
            setTimeout(() =>{
             if(response.data.userRole){
-              // this.props.history = '/admins';
-               console.log('Role:' + response.data.userRole);
                this.setState({redirect: "admins"});
             }
             else{
@@ -35,7 +32,6 @@ class SignIn extends Component {
             }
            }, 500);
          })
-          // console.log(response.headers)
         .catch(function (error) {
           this.props.history.replace('/error');
         });
@@ -61,7 +57,6 @@ class SignIn extends Component {
   render() {
 
     if(this.state.redirect === "admins"){
-      //console.log("Redirect to admin");
       return setTimeout(() => {
           this.props.history.push('/admins');
         },500); 

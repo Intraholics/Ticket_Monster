@@ -24,8 +24,6 @@ class AdminsPage extends Component {
         axios.get('http://localhost:8080/TicketMonster/api/orders')
             .then(response => {
                 const res = response.data;
-
-                console.log(res);  //output example
                 this.setState({ orders: res});
                 
             })
@@ -37,11 +35,9 @@ class AdminsPage extends Component {
     onClickHandler = (id) => { 
         axios.delete(`http://localhost:8080/TicketMonster/api/orders/${id}`)
             .then(res => {
-                console.log(res);
                 axios.get('http://localhost:8080/TicketMonster/api/orders')
                     .then(response => {
                         const newResponse = response.data;
-                        console.log(newResponse);  //output example
                         this.setState({ orders: newResponse});
                         
                         //Checking if current page is empty-if yes then it's the last page 
@@ -66,11 +62,9 @@ class AdminsPage extends Component {
     renderList() {
         const list = this.state.orders;
         const ref = (this.state.page-1)*10;
-       // console.log(ref);
         const pageList = list.slice(ref, ref+10);
          const orders = pageList.map((event,i) => {
             return <Order  key={event.orderID}
-                            // mykey={event.orderID}
                             mykey={i+ref+1}
                             username={event.username}
                             date={event.purchaseDate} 
@@ -102,11 +96,7 @@ class AdminsPage extends Component {
 
 
     itemclick(num){
-        //console.log(num);
         this.setState({page: num});
-        //let PagBtnsNum= this.state.orders.length/10 + 1;
-        
-
     }
 
     lastPageEmpty(){
@@ -125,23 +115,16 @@ class AdminsPage extends Component {
     renderPagination() {
         let PagBtnsNum= this.state.orders.length/10 + 1;
         PagBtnsNum= Math.floor(PagBtnsNum);
-        let items = [];
-            
+        let items = [];   
         let empty = this.lastPageEmpty();
-        //console.log(res);
+
         if(empty){
             PagBtnsNum=PagBtnsNum-1;
         }
         
 
-       // console.log("current page length:" + pageLength);
-
         if(PagBtnsNum>1){
         for (let number = 1; number <= PagBtnsNum; number++) {
-            console.log("PagBtnsNum:" + PagBtnsNum);
-            console.log("number:" + number);
-            
-            //const ref = (number*10)<1;
           items.push(
             <Pagination.Item active={number === this.state.page} key={number} id={number} onClick={()=>this.itemclick(number)}>{number}</Pagination.Item>
           );

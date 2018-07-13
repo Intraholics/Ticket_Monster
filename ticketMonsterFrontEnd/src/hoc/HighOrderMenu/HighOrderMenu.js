@@ -16,7 +16,7 @@ export default function higherOrderMenu(Component) {
       if((sessionStorage.getItem('token')===null) || (sessionStorage.getItem('token')===undefined)){
           this.setState({connected: false});
       }else{
-        this.setState({connected: true});
+          this.setState({connected: true});
       }
     }
 
@@ -38,12 +38,12 @@ export default function higherOrderMenu(Component) {
               <div>
 
                 <header className=" header">
-                <Animated animationIn="fadeInDown" isVisible={true}>
-                  <h2><NavLink to="/" exact>Ticket Monster</NavLink></h2>
-                </Animated>
-                <Animated animationIn="fadeInDown" isVisible={true}>         
-                 {nav}
-                </Animated>
+                  <Animated animationIn="fadeInDown" isVisible={true}>
+                    <h2><NavLink to="/" exact>Ticket Monster</NavLink></h2>
+                  </Animated>
+                  <Animated animationIn="fadeInDown" isVisible={true}>         
+                    {nav}
+                  </Animated>
               </header>
 
               <Component {...this.props} />

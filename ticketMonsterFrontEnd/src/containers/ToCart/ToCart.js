@@ -22,20 +22,6 @@ class ToCart extends PureComponent {
             });
     }
 
-    // componentDidUpdate(prevProps, prevState){
-
-    //     if(this.state.cartEvents.length !== prevState.cartEvents.length){
-    //         axios.get('http://localhost:8080/TicketMonster/api/cart/user/1') //userid
-    //             .then(res => {
-    //                 this.setState({cartEvents: res.data});
-    //             })
-    //             .catch(err => {
-    //                 throw new Error(err);
-    //             });
-    //         }      
-        
-    // }
-
     onDeleteHandler = (id) => {
         axios.delete(`http://localhost:8080/TicketMonster/api/cart/${id}`)
             .then(res => {

@@ -17,7 +17,6 @@ class LandingPage extends Component {
         this.props.history.push('/signin');
       }else{
         this.props.history.push('/events');
-        console.log("Going to events");
       }
     }
 

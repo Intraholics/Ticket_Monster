@@ -13,24 +13,13 @@ class AdminsUsers extends Component {
 
     componentDidMount(){ //get method
         axios.defaults.headers.common['Authorization'] = sessionStorage.getItem('token');
-        // if((sessionStorage.getItem('token')===null) || (sessionStorage.getItem('token')===undefined)){
-        //     this.props.history.push('/signin');
-        //   }else{
-        //     if(!(sessionStorage.getItem('userRole'))){    
-        //       this.props.history.push('/events');
-        //     }
-        //   }
         this.getUsers();
-        console.log("Component did mount");
     }
 
     getUsers(){
         axios.get('http://localhost:8080/TicketMonster/api/users')
         .then(response => {
-            console.log(response.data);
             const res = response.data;
-            
-            console.log(res);  //output example
             this.setState({ users: res});
             
         })
@@ -40,12 +29,10 @@ class AdminsUsers extends Component {
     }
 
     onClickHandlerReset = (id) => { 
-        console.log('Reset pass of user with id:'+ id);
         axios.put(`http://localhost:8080/TicketMonster/api/users/${id}&false`)
         .then(response => {
-            console.log(response);  //output example
             this.getUsers();
-            swal("Success!", "Password Reseted", "success");
+            swal("Success!", "Password Reset", "success");
             
         })
         .catch(err => {
@@ -54,12 +41,9 @@ class AdminsUsers extends Component {
     
     }
     onClickHandlerToggle = (id) => { 
-        console.log('Toggle role of user with id:'+ id);
         axios.put(`http://localhost:8080/TicketMonster/api/users/${id}&true`)
         .then(response => {
-            console.log(response);  //output example
             this.getUsers();
-            console.log('Toggled');
         })
         .catch(err => {
             this.props.history.replace('/error');

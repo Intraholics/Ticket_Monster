@@ -9,7 +9,7 @@ export default function UserMenu(Component) {
       return (
               <div>
 
-                <header className=" header">
+              <header className=" header">
                 <Animated animationIn="fadeInDown" isVisible={true}>
                   <h2><NavLink to="/" exact>Ticket Monster</NavLink></h2>
                 </Animated>

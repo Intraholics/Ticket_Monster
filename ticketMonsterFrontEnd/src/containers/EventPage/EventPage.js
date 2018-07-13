@@ -27,9 +27,7 @@ class EventPage extends Component {
                     return {...val, quantity: 0,finalPrice: 0}; 
                     //vazw quantity,finalPrice sto event sun auta pou phra apo to get!
             });
-            console.log(res);  //output example
             this.setState({ events: res});
-        
             
         })
         .catch(err => {
@@ -46,10 +44,8 @@ class EventPage extends Component {
                         quantity: this.state.events[id - 1].quantity,
                         finalPrice: this.state.events[id - 1].finalPrice,
                         userID: parseInt(sessionStorage.getItem('userID'),10)}; //kanw post to event pou ekana book
-            console.log(post)
             axios.post('http://localhost:8080/TicketMonster/api/cart', post)
                 .then(response => {
-                    console.log(response);
                     swal("Nice choice!", "Added to your cart!", "success");
                 })
                 .catch(err => {
@@ -62,8 +58,8 @@ class EventPage extends Component {
     }
 
     onChangeHandler = (event,id) => {
-        const num = event.target.value; //oti pataw!
-        const yolo = this.state.events.map(val => { // dhmiourgw to neo mou state me finalPrice kai quantity of tickets
+        const num = event.target.value;
+        const newEvents = this.state.events.map(val => { // dhmiourgw to neo mou state me finalPrice kai quantity of tickets
            if(val.eventID === id){ //an to id tou event einai iso me to id tou event pou patithike
                 const fullAmount = num * val.price ; //pollaplasiazw ton arithmo eishthriwn me thn timh
                 return {...val, quantity: num, finalPrice: fullAmount }; //epistrefeis to quantity
@@ -71,8 +67,7 @@ class EventPage extends Component {
                return val;
            }
         });
-        console.log(yolo); //example output
-        this.setState({events : yolo });
+        this.setState({events : newEvents });
     }
 
   render() {

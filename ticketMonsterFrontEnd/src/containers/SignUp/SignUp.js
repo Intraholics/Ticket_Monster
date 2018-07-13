@@ -29,9 +29,6 @@ class SignUp extends Component {
         console.log(post)
         axios.post('http://localhost:8080/TicketMonster/api/users', post)
             .then(response => {
-                console.log(response);
-            })
-            .then(response => {
               setTimeout(() => {
                 this.props.history.replace('/signin');
               },1000); 

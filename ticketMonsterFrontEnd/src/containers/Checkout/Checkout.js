@@ -36,7 +36,6 @@ class Checkout extends Component{
                     surname: res2.data.surname,
                     email: res2.data.email
                 });
-                console.log(res2.data);
             })
             .catch(err => {
                 this.props.history.replace('/error');
@@ -91,15 +90,9 @@ class Checkout extends Component{
                         creditcard: this.state.creditCard,
                         purchaseDate: this.state.purchaseDate}
             });
-            console.log(postOrder);
                 axios.post('http://localhost:8080/TicketMonster/api/orders/orders', postOrder)
                     .then(response => {
-                        console.log(response);
-                    })
-                    .then(response => {
-                        setTimeout(() => {
                             this.props.history.replace('/events');
-                        },1000); 
                     })
                     .catch(err => {
                         this.props.history.replace('/error');

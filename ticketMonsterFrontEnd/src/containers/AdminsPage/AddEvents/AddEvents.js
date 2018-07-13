@@ -23,10 +23,8 @@ class AddEvents extends Component {
           ticketsLeft: this.state.ticketsLeft,
           price: this.state.price         
         }; 
-        console.log(post)
         axios.post('http://localhost:8080/TicketMonster/api/events', post)
             .then(response => {
-                console.log(response);
                 swal("Success!", "New event added!", "success");
             })
             .then(response => {

@@ -80,14 +80,16 @@ public class OrdersBusiness implements OrdersBusinessLocal {
 
     @Override
     public boolean addOrder(Orders order) {
-        Integer TicketLeft=cart1.findCartByID(order.getCartID().getCartID()).getEventID().getTicketsLeft();
-        if (order.getCartID().getQuantity()>TicketLeft){
+        Cart cartfound=cart1.findCartByID(order.getCartID().getCartID());
+        Events eventfound=event1.findEventbyId(cartfound.getEventID().getEventID());
+        if (cartfound.getQuantity()<eventfound.getTicketsLeft()){
             Instant instant = LocalDateTime.now().toInstant(ZoneOffset.ofHours(3));
             Date date = Date.from(instant);
             order.setPurchaseDate(date);
-            Cart cartfound=cart1.findCartByID(order.getCartID().getCartID());
             cartfound.setCheckout(true);
             cart1.updateCart(cartfound);
+            eventfound.setTicketsLeft(eventfound.getTicketsLeft()-cartfound.getQuantity());
+            event1.updateEvent(eventfound);
             order1.addOrder(order);
             return true;
         }
@@ -101,26 +103,27 @@ public class OrdersBusiness implements OrdersBusinessLocal {
         Integer Price =0;
         String creditcard=order.get(0).getCreditcard();
         String email=cart1.findCartByID(order.get(0).getCartID().getCartID()).getUserID().getEmail();
-        
-        for(int i=0; i<order.size(); i++){
-            Integer TicketLeft=cart1.findCartByID(order.get(i).getCartID().getCartID()).getEventID().getTicketsLeft();
-            if (cart1.findCartByID(order.get(i).getCartID().getCartID()).getQuantity()<TicketLeft){
-                Instant instant = LocalDateTime.now().toInstant(ZoneOffset.ofHours(3));
-                Date date = Date.from(instant);
-                order.get(i).setPurchaseDate(date);
-                Cart cartfound=cart1.findCartByID(order.get(i).getCartID().getCartID());
-                cartfound.setCheckout(true);
-                cart1.updateCart(cartfound);
-                order1.addOrder(order.get(i));
-                Price=Price+cart1.findCartByID(order.get(i).getCartID().getCartID()).getFinalPrice();
+             for (int i=0; i<order.size(); i++){
+                    Cart cartfound=cart1.findCartByID(order.get(i).getCartID().getCartID());
+                    Events eventfound=event1.findEventbyId(cartfound.getEventID().getEventID());
+                 if (cartfound.getQuantity()<eventfound.getTicketsLeft()) {
+                 Instant instant = LocalDateTime.now().toInstant(ZoneOffset.ofHours(3));
+                 Date date = Date.from(instant);
+                 order.get(i).setPurchaseDate(date);
+                 order1.addOrder(order.get(i));
+                 cartfound.setCheckout(true);
+                 cart1.updateCart(cartfound);
+                
+                 eventfound.setTicketsLeft(eventfound.getTicketsLeft()-cartfound.getQuantity());
+                 event1.updateEvent(eventfound);
+                 
+                 Price=Price + cart1.findCartByID(order.get(i).getCartID().getCartID()).getFinalPrice();
+                 }
             }
-            else{
-                return false;
-            }
-        }
 //      mail.SendReceipt(email,Price.toString(), creditcard);
         return true;
-    }
+        }
+
 
 
     @Override
@@ -150,7 +153,7 @@ public class OrdersBusiness implements OrdersBusinessLocal {
         cart1.updateCart(toupdate);        
         order1.deleteOrderById(orderID);
 
-//        mail.SendRefund(email, sum.toString());
+//        mail.SendRefund(email, sum.toString(),OrderID.toString());
         return true;
     }
 

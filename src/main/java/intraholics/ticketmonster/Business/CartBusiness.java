@@ -40,13 +40,15 @@ public class CartBusiness implements CartBusinessLocal {
         List<Cart> carts = cart1.findCartByUser(userID);
         List<CustomCart> usercarts = new ArrayList();
         for (int i=0; i<carts.size(); i++){
-            CustomCart usercart=new CustomCart();
-            usercart.setCartID(carts.get(i).getCartID());
-            usercart.setEventDescr(carts.get(i).getEventID().getDescription());
-            usercart.setFinalPrice(carts.get(i).getFinalPrice());
-            usercart.setQuantity(carts.get(i).getQuantity());
-            usercart.setUsername(carts.get(i).getUserID().getUsername());
-            usercarts.add(usercart);
+            if (carts.get(i).getCheckout()==false){
+                CustomCart usercart=new CustomCart();
+                usercart.setCartID(carts.get(i).getCartID());
+                usercart.setEventDescr(carts.get(i).getEventID().getDescription());
+                usercart.setFinalPrice(carts.get(i).getFinalPrice());
+                usercart.setQuantity(carts.get(i).getQuantity());
+                usercart.setUsername(carts.get(i).getUserID().getUsername());
+                usercarts.add(usercart);
+            }
         }
         return usercarts;
     }

@@ -120,7 +120,8 @@ public class OrdersBusiness implements OrdersBusinessLocal {
                  Price=Price + cart1.findCartByID(order.get(i).getCartID().getCartID()).getFinalPrice();
                  }
             }
-//      mail.SendReceipt(email,Price.toString(), creditcard);
+             String orderID=order.get(0).getOrderID().toString();
+//             mail.SendRefund(email,Price.toString(), email);
         return true;
         }
 
@@ -152,8 +153,7 @@ public class OrdersBusiness implements OrdersBusinessLocal {
         toupdate.setCheckout(true);
         cart1.updateCart(toupdate);        
         order1.deleteOrderById(orderID);
-
-//        mail.SendRefund(email, sum.toString(),OrderID.toString());
+//        mail.SendRefund(email, sum.toString(),orderID.toString());
         return true;
     }
 

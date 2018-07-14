@@ -12,7 +12,6 @@ import intraholics.ticketmonster.SupplementaryClasses.UserLogged;
 import intraholics.ticketmonster.security.Encryption;
 import java.util.List;
 import java.util.Random;
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -90,7 +89,7 @@ private EmailSessionBean mail;
             String npass =encryted.encryptMessage(newpass);
             String email = user1.findUserById(UserID).getEmail();
             user1.updateUser(UserID,npass);
-            //     mail.SendMail(email,newpass);
+//            mail.SendMail(email, newpass);
             }
          return true;
     }
